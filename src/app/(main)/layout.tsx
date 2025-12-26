@@ -1,13 +1,23 @@
-import '@once-ui-system/core/css/styles.css';
-import '@once-ui-system/core/css/tokens.css';
-import '@/resources/custom.css'
+import "@once-ui-system/core/css/styles.css";
+import "@once-ui-system/core/css/tokens.css";
+import "@/resources/custom.css";
 
 import classNames from "classnames";
 
 import { baseURL, meta, fonts, effects, style, dataStyle } from "@/resources/once-ui.config";
-import { Meta, Schema, Column, Flex, opacity, SpacingToken, Background } from "@once-ui-system/core";
-import { Providers } from '@/components/Providers';
-import { Header } from '@/components/Header';
+import {
+  Meta,
+  Schema,
+  Column,
+  Flex,
+  opacity,
+  SpacingToken,
+  Background,
+} from "@once-ui-system/core";
+import { Providers } from "@/components/Providers";
+import { Header } from "@/components/Header";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -48,6 +58,7 @@ export default function RootLayout({
         path={meta.home.path}
       />
       <head>
+        <GoogleAnalytics />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
@@ -61,12 +72,12 @@ export default function RootLayout({
                     accent: style.accent,
                     neutral: style.neutral,
                     solid: style.solid,
-                    'solid-style': style.solidStyle,
+                    "solid-style": style.solidStyle,
                     border: style.border,
                     surface: style.surface,
                     transition: style.transition,
                     scaling: style.scaling,
-                    'viz-style': dataStyle.variant,
+                    "viz-style": dataStyle.variant,
                   })};
                   Object.entries(config).forEach(([key, value]) => {
                     root.setAttribute('data-' + key, value);
@@ -90,7 +101,14 @@ export default function RootLayout({
         />
       </head>
       <Providers>
-        <Column as="body" background="page" fillWidth margin="0" padding="0" className="relative min-h-screen">
+        <Column
+          as="body"
+          background="page"
+          fillWidth
+          margin="0"
+          padding="0"
+          className="relative min-h-screen"
+        >
           <Background
             position="absolute"
             mask={{
@@ -133,9 +151,8 @@ export default function RootLayout({
             }}
           />
           <Header />
-          <main className="relative z-10 flex flex-col flex-1">
-            {children}
-          </main>
+          <main className="relative z-10 flex flex-col flex-1">{children}</main>
+          <SpeedInsights />
         </Column>
       </Providers>
     </Flex>

@@ -1,0 +1,30 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 66s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/(main)/projects/[slug]/page.tsx:98:43
+Type error: Type '"1 1 200px"' is not assignable to type 'flex | undefined'.
+
+[0m [90m  96 |[39m                 [33m<[39m[33mRow[39m gap[33m=[39m[32m"24"[39m wrap[33m>[39m
+ [90m  97 |[39m                     {project[33m.[39mkeyFeatures[33m.[39mmap((feature[33m,[39m index) [33m=>[39m (
+[31m[1m>[22m[39m[90m  98 |[39m                         [33m<[39m[33mFlex[39m key[33m=[39m{index} flex[33m=[39m[32m"1 1 200px"[39m padding[33m=[39m[32m"24"[39m radius[33m=[39m[32m"l"[39m background[33m=[39m[32m"surface"[39m border[33m=[39m[32m"neutral-alpha-weak"[39m gap[33m=[39m[32m"12"[39m vertical[33m=[39m[32m"center"[39m[33m>[39m
+ [90m     |[39m                                           [31m[1m^[22m[39m
+ [90m  99 |[39m                             [33m<[39m[33mHiOutlineCheckCircle[39m size[33m=[39m{[35m20[39m} className[33m=[39m[32m"text-emerald-500 shrink-0"[39m [33m/[39m[33m>[39m
+ [90m 100 |[39m                             [33m<[39m[33mText[39m variant[33m=[39m[32m"label-strong-s"[39m[33m>[39m{feature}[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 101 |[39m                         [33m<[39m[33m/[39m[33mFlex[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null

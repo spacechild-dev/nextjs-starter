@@ -1,0 +1,30 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 77s
+   Running TypeScript ...
+Failed to compile.
+
+./src/components/Header.tsx:199:26
+Type error: Cannot find name 'Line'.
+
+[0m [90m 197 |[39m                             [33mTR[39m
+ [90m 198 |[39m                         [33m<[39m[33m/[39m[33mToggleButton[39m[33m>[39m
+[31m[1m>[22m[39m[90m 199 |[39m                         [33m<[39m[33mLine[39m vert background[33m=[39m[32m"neutral-alpha-medium"[39m height[33m=[39m[32m"12"[39m marginX[33m=[39m[32m"4"[39m [33m/[39m[33m>[39m
+ [90m     |[39m                          [31m[1m^[22m[39m
+ [90m 200 |[39m                         [33m<[39m[33mIconButton[39m
+ [90m 201 |[39m                             size[33m=[39m[32m"s"[39m
+ [90m 202 |[39m                             variant[33m=[39m[32m"tertiary"[39m[0m
+Next.js build worker exited with code: 1 and signal: null

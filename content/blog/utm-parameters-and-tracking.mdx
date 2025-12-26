@@ -1,0 +1,177 @@
+---
+title: "UTM & ClickID Tracking: A Guide to Storing Parameters in the Browser"
+description: "Learn how to capture and store UTM parameters and Click IDs in local and session storage to maintain tracking data across user sessions for better digital marketing analysis."
+date: "2024-07-05"
+author: "Dagkan"
+tags: ["marketing", "analytics", "javascript", "tracking", "web development"]
+published: true
+---
+
+In digital marketing and performance analysis, tracking parameters like UTM parameters and Click IDs play a critical role in better understanding website visitors. In this article, I will discuss how we can store parameters visible in the address bar during a visitor's first visit and use them later. I will share the complete script at the end of the article, but my recommendation is to generate your own code with the help of AI. Small details might be overlooked, but this way, it will be easier for you to grasp the logic.
+
+## What is the Purpose of This Script?
+
+This script's main purpose is to capture tracking parameters (e.g., `utm_source`, `utm_medium`, `gclid`, `fbclid`) brought with the URL during a visitor's first visit and store them in local storage and session storage. This way, these data do not get lost as the user navigates your site and can be used when needed. Otherwise, tracking parameters appearing in the address bar on the first page visit will be lost on subsequent page visits.
+
+## How Does the Script Work?
+
+### 1. Defining Which Parameters We Want to Track
+
+At the beginning of the code, you define an array of parameters:
+
+```javascript
+const TRACKED_PARAMS = [
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'
+];
+```
+
+Here, we have chosen the primary UTM parameters and the two most frequently used ad click IDs. You can include as many parameters as you wish. It's up to you which queries within the URL you want to collect. Let's say you add a parameter `adgroup=generic` to your ad campaign. By adding `'adgroup'` to the array above, you will also store the value corresponding to this query.
+
+*   `gclid` = Google Click ID
+*   `fbclid` = Facebook Click ID
+
+### 2. Capture the Parameters
+
+When a user arrives at the site from a link, the script searches for these parameters in the URL and collects what it finds into an object. Afterwards, we can store them in two different ways and track separate sources.
+
+### 3. Store with Local Storage for 30 Days
+
+During the first visit, these parameters are stored in `localStorage` for 30 days. This means that when a user enters the site via a campaign link, this information is not lost. After 30 days, it is automatically cleared. If we were to remove this 30-day limit, these parameters would remain in the browser until the user clears their browser data, but since most ad platforms have an attribution window of 28-30 days, keeping them for this period is beneficial.
+
+In the script I shared, you can update the line below to determine the storage duration in local storage.
+
+```javascript
+const EXPIRY_DAYS = 30; // Enter the storage duration in days here.
+const LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+// Calculated in milliseconds in total. Do not make any changes in the 2nd line.
+```
+
+### 4. Store with Session Storage for the Duration of the Session
+
+Additionally, parameters are also written to `sessionStorage`. This allows parameters to be easily accessible until the user closes the tab. In each new session, the initially found parameters are stored again. Here, you can set up a special tracking system to compare the first and last sessions.
+
+### 5. Easy Access with JavaScript
+
+If you wish, you can access the captured parameters from other scripts via `window.trackingParams`.
+
+```javascript
+console.log(window.trackingParams);
+```
+
+## Where Can You Use This Script?
+
+*   **Pre-filling forms:** You can automatically fill in campaign information belonging to the user in registration or contact forms. I will share an article on this soon.
+*   **Analytics integration:** You can use it to send your own tracking parameters to tools like Google Analytics, Facebook Pixel.
+*   **Personalized content:** You can display personalized content on your website based on the user's traffic source or campaign parameters. Thanks to A/B testing, personalization, and CRO (Conversion Rate Optimization) tools, it is possible to offer special messages and campaign offers to each visitor. This way, you can improve the user experience and increase your conversion rates.
+
+## The complete code to add inside `<body>…</body>`:
+
+```html
+<script>
+(function trackUrlParams() {
+    const TRACKED_PARAMS = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+        'gclid',
+        'fbclid'
+    ];
+    const searchParams = new URLSearchParams(window.location.search);
+    let foundParams = {};
+    for (const key of TRACKED_PARAMS) {
+        if (searchParams.has(key)) {
+            foundParams[key] = searchParams.get(key);
+        }
+    }
+    const LS_KEY = 'trackingParams';
+    const LS_EXP_KEY = 'trackingParams_expiry';
+    const now = Date.now();
+    const EXPIRY_DAYS = 30; // Storage duration (days)
+    const LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+    if (Object.keys(foundParams).length > 0) {
+        if (!localStorage.getItem(LS_KEY) || Number(localStorage.getItem(LS_EXP_KEY)) < now) {
+            localStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+            localStorage.setItem(LS_EXP_KEY, now + LS_EXPIRY_MS);
+        }
+    } else {
+        const exp = Number(localStorage.getItem(LS_EXP_KEY));
+        if (exp && exp < now) {
+            localStorage.removeItem(LS_KEY);
+            localStorage.removeItem(LS_EXP_KEY);
+        }
+    }
+    if (Object.keys(foundParams).length > 0) {
+        sessionStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+    } else {
+        sessionStorage.removeItem(LS_KEY);
+    }
+    window.trackingParams = foundParams;
+})();
+</script>
+```
+
+## Custom HTML code you can use in Google Tag Manager:
+
+```html
+<script>
+(function trackUrlParams() {
+    var TRACKED_PARAMS = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+        'gclid',
+        'fbclid'
+    ];
+    // Classic method instead of URLSearchParams:
+    function getQueryParams() {
+        var params = {};
+        var query = window.location.search.substring(1);
+        var pairs = query.split('&');
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i].split('=');
+            if (pair[0]) {
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+            }
+        }
+        return params;
+    }
+    var searchParams = getQueryParams();
+    var foundParams = {};
+    for (var i = 0; i < TRACKED_PARAMS.length; i++) {
+        var key = TRACKED_PARAMS[i];
+        if (searchParams.hasOwnProperty(key)) {
+            foundParams[key] = searchParams[key];
+        }
+    }
+    var LS_KEY = 'trackingParams';
+    var LS_EXP_KEY = 'trackingParams_expiry';
+    var now = (new Date()).getTime();
+    var EXPIRY_DAYS = 30; // Storage duration (days)
+    var LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+    if (Object.keys(foundParams).length > 0) {
+        if (!localStorage.getItem(LS_KEY) || Number(localStorage.getItem(LS_EXP_KEY)) < now) {
+            localStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+            localStorage.setItem(LS_EXP_KEY, now + LS_EXPIRY_MS);
+        }
+    } else {
+        var exp = Number(localStorage.getItem(LS_EXP_KEY));
+        if (exp && exp < now) {
+            localStorage.removeItem(LS_KEY);
+            localStorage.removeItem(LS_EXP_KEY);
+        }
+    }
+    if (Object.keys(foundParams).length > 0) {
+        sessionStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+    } else {
+        sessionStorage.removeItem(LS_KEY);
+    }
+    window.trackingParams = foundParams;
+})();
+</script>
+```
+
+See you in the next article.

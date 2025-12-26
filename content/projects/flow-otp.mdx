@@ -1,0 +1,54 @@
+---
+title: FlowOTP
+description: Exploring the security principles and implementation details of FlowOTP, a secure and clean solution for two-factor authentication.
+date: 2024-12-25
+author: Dagkan
+href: https://github.com/spacechild-dev/FlowOTP
+github: https://github.com/spacechild-dev/FlowOTP
+tags:
+  - security
+  - 2fa
+  - typescript
+  - open-source
+keyFeatures:
+  - RFC 6238 TOTP Implementation
+  - Zero Analytics & Privacy Focused
+  - Secure In-Memory Key Handling
+  - 100% Offline Capability
+  - Minimalist & Clean Design
+  - Strict Input Validation
+published: true
+---
+
+Security should never come at the cost of usability. **FlowOTP** is born from the need for a clean, efficient, and open-source way to manage TOTP (Time-based One-Time Password) tokens.
+
+### Why FlowOTP?
+
+While many 2FA apps exist, many are cluttered with unnecessary features or are proprietary. FlowOTP focuses on:
+- **Clean Architecture:** Built with TypeScript for maintainability and fewer bugs.
+- **Privacy First:** Your keys stay on your device.
+- **Minimalist Design:** A distraction-free interface for when you need your code fast.
+
+### Technical Implementation
+
+#### 1. TOTP Algorithm (RFC 6238)
+At its core, FlowOTP implements the standard TOTP algorithm. This involves:
+- **Secret Key Decoding:** Handling Base32 encoded secrets.
+- **HMAC-SHA1 Hashing:** Generating a unique hash based on the secret and current time.
+- **Dynamic Truncation:** Extracting a 6-digit code from the hash.
+
+#### 2. Security Best Practices
+- **In-Memory Security:** Ensuring sensitive keys are handled carefully in memory and wiped when not needed.
+- **Input Validation:** Strict validation of secret keys to prevent common injection or formatting errors.
+
+### Best Practices for 2FA Apps
+
+- **Zero Analytics:** Security tools should not track user behavior. FlowOTP is strictly analytics-free.
+- **Offline Capability:** A 2FA tool must work without an internet connection. All calculations in FlowOTP are performed locally.
+- **Visual Feedback:** Clear timers showing code expiration help reduce user anxiety during login flows.
+
+### Conclusion
+
+FlowOTP is a testament to the fact that security tools can be both powerful and beautiful. By adhering to open standards and prioritizing user privacy, it provides a reliable alternative for modern digital security.
+
+View the project on [GitHub](https://github.com/spacechild-dev/FlowOTP).

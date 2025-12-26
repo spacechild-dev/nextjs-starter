@@ -1,0 +1,30 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 60s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/(main)/resume/page.tsx:49:18
+Type error: Type '"space-between"' is not assignable to type '"center" | "start" | "end" | "between" | "around" | "even" | "stretch" | undefined'.
+
+[0m [90m 47 |[39m           {[90m/* OPTDCOM */[39m}
+ [90m 48 |[39m           [33m<[39m[33mColumn[39m gap[33m=[39m[32m"16"[39m[33m>[39m
+[31m[1m>[22m[39m[90m 49 |[39m             [33m<[39m[33mRow[39m horizontal[33m=[39m[32m"space-between"[39m vertical[33m=[39m[32m"center"[39m wrap[33m>[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 50 |[39m               [33m<[39m[33mHeading[39m variant[33m=[39m[32m"heading-strong-m"[39m onBackground[33m=[39m[32m"brand-strong"[39m[33m>[39m[33mOPTDCOM[39m[33m<[39m[33m/[39m[33mHeading[39m[33m>[39m
+ [90m 51 |[39m               [33m<[39m[33mText[39m variant[33m=[39m[32m"body-default-s"[39m onBackground[33m=[39m[32m"neutral-weak"[39m[33m>[39m[33mOct[39m [35m2025[39m – [33mPresent[39m[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 52 |[39m             [33m<[39m[33m/[39m[33mRow[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null

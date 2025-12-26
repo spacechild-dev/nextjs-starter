@@ -1,0 +1,30 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 74s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/(main)/page.tsx:110:69
+Type error: Type '"neutral-faint"' is not assignable to type 'Colors | undefined'.
+
+[0m [90m 108 |[39m                                 [33m<[39m[33mRow[39m vertical[33m=[39m[32m"center"[39m gap[33m=[39m[32m"8"[39m[33m>[39m
+ [90m 109 |[39m                                     [33m<[39m[33mHiOutlineClock[39m size[33m=[39m{[35m14[39m} className[33m=[39m[32m"text-neutral-faint"[39m [33m/[39m[33m>[39m
+[31m[1m>[22m[39m[90m 110 |[39m                                     [33m<[39m[33mText[39m variant[33m=[39m[32m"body-default-xs"[39m onBackground[33m=[39m[32m"neutral-faint"[39m[33m>[39m
+ [90m     |[39m                                                                     [31m[1m^[22m[39m
+ [90m 111 |[39m                                         {language [33m===[39m [32m'tr'[39m [33m?[39m [32m`Okuma süresi: ${post.readingTime}`[39m [33m:[39m [32m`Reading time: ${post.readingTime}`[39m}
+ [90m 112 |[39m                                     [33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 113 |[39m                                 [33m<[39m[33m/[39m[33mRow[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null

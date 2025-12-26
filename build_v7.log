@@ -1,0 +1,30 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 78s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/(main)/page.tsx:67:46
+Type error: Type '"neutral-faint"' is not assignable to type 'Colors | undefined'.
+
+[0m [90m 65 |[39m           {[90m/* Last.fm Widgets Comparison */[39m}
+ [90m 66 |[39m           [33m<[39m[33mColumn[39m gap[33m=[39m[32m"12"[39m fillWidth marginTop[33m=[39m[32m"32"[39m[33m>[39m
+[31m[1m>[22m[39m[90m 67 |[39m             [33m<[39m[33mText[39m variant[33m=[39m[32m"label-default-xs"[39m onBackground[33m=[39m[32m"neutral-faint"[39m align[33m=[39m[32m"center"[39m[33m>[39m[33mLast[39m[33m.[39mfm [33mModül[39m [33mAlternatifleri[39m ([33mÖneri[39m[33m:[39m [33mKompakt[39m)[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m    |[39m                                              [31m[1m^[22m[39m
+ [90m 68 |[39m             
+ [90m 69 |[39m             [33m<[39m[33mFlex[39m direction[33m=[39m[32m"column"[39m gap[33m=[39m[32m"16"[39m fillWidth horizontal[33m=[39m[32m"center"[39m[33m>[39m
+ [90m 70 |[39m                 {[90m/* Default Variant */[39m}[0m
+Next.js build worker exited with code: 1 and signal: null

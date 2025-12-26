@@ -1,0 +1,31 @@
+
+> @once-ui-system/nextjs-starter@1.1.1 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Volumes/dev/web-apps/daiquiri.dev/once-ui-site/fresh-starter/package-lock.json
+
+   ▲ Next.js 16.0.9 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 67s
+   Running TypeScript ...
+Failed to compile.
+
+./src/app/(main)/projects/[slug]/page.tsx:129:65
+Type error: Type '{ children: Element; key: number; style: { minWidth: string; }; aspect: string; background: "surface"; border: "neutral-alpha-weak"; radius: "l"; center: true; }' is not assignable to type 'IntrinsicAttributes & SmartFlexProps & RefAttributes<HTMLDivElement>'.
+  Property 'aspect' does not exist on type 'IntrinsicAttributes & SmartFlexProps & RefAttributes<HTMLDivElement>'.
+
+[0m [90m 127 |[39m                 {[90m/* Placeholders if no/few screenshots */[39m}
+ [90m 128 |[39m                 {([33m![39mproject[33m.[39mscreenshots [33m||[39m project[33m.[39mscreenshots[33m.[39mlength [33m<[39m [35m3[39m) [33m&&[39m [[35m1[39m[33m,[39m [35m2[39m[33m,[39m [35m3[39m][33m.[39mmap((_[33m,[39m i) [33m=>[39m (
+[31m[1m>[22m[39m[90m 129 |[39m                     [33m<[39m[33mFlex[39m key[33m=[39m{i} style[33m=[39m{{ minWidth[33m:[39m [32m'400px'[39m }} aspect[33m=[39m[32m"16/9"[39m background[33m=[39m[32m"surface"[39m border[33m=[39m[32m"neutral-alpha-weak"[39m radius[33m=[39m[32m"l"[39m center[33m>[39m
+ [90m     |[39m                                                                 [31m[1m^[22m[39m
+ [90m 130 |[39m                         [33m<[39m[33mText[39m onBackground[33m=[39m[32m"neutral-weak"[39m[33m>[39m[33mScreenshot[39m [33mPlaceholder[39m {i [33m+[39m [35m1[39m}[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 131 |[39m                     [33m<[39m[33m/[39m[33mFlex[39m[33m>[39m
+ [90m 132 |[39m                 ))}[0m
+Next.js build worker exited with code: 1 and signal: null

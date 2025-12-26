@@ -1,0 +1,178 @@
+---
+title: "UTM & ClickID Takibi: Parametreleri Tarayıcıda Saklama Rehberi"
+description: "UTM parametrelerini ve Click ID'leri localStorage/sessionStorage üzerinde saklayarak dijital pazarlama analizlerinizi nasıl iyileştirebileceğinizi öğrenin."
+date: "2024-07-05"
+tags: ["marketing", "analytics", "tracking"]
+---
+
+Dijital pazarlama ve performans analizinde, **UTM parametreleri** ve tıklama id'leri (Click ID) gibi izleme parametreleri web sitesi ziyaretçilerini daha iyi anlamak için kritik bir rol oynuyor. Bu yazıda ziyaretçilerin ilk ziyaretinde adres çubuğunda görünen parametreleri nasıl saklayabileceğimize ve sonrasında kullanabileceğimize değineceğim. Script'in tamamını makale sonunda paylaşacağım fakat önerim, yapay zekadan da destek alıp kendi kodunuzu yazdırmanız. Ufak tefek detaylar gözden kaçabilir fakat bu şekilde mantığını kavramanız da kolaylaşır.
+
+### Kodun Amacı Nedir?
+
+Bu script’in ana amacı, ziyaretçilerin ilk ziyaret sırasında URL ile getirdiği izleme parametrelerini (örneğin: utm_source, utm_medium, gclid, fbclid gibi) yakalamak ve bunları yerel depolama (localStorage) ile oturum depolama (sessionStorage) içerisinde saklamaktır. Böylece, kullanıcı sitenizde gezinirken bu veriler kaybolmaz ve gerektiğinde kullanabilirsiniz. Aksi taktirde ilk sayfa ziyaretinde adres çubuğunda beliren takip parametreleri bir sonraki sayfa ziyaretinde kırılacaktır.
+
+### Script Nasıl Çalışır?
+
+#### 1. Hangi parametreleri takip etmek istediğimizi tanımlıyoruz.
+
+Kodun başında bir dizi parametre tanımlıyorsunuz:
+
+```javascript
+const TRACKED_PARAMS = [
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'
+];
+```
+
+Biz burada birincil önemdeki utm parametrelerini ve en sık kullanılan iki platforma ait reklam tıklama id'lerini tercih ettik. Siz istediğiniz kadar parametre dahil edebilirsiniz. URL içerisindeki sorguların hangilerini toplamak istediğiniz sizin elinizde. Reklam kampanyanıza "adgroup=generic" diye bir parametre eklediğiniz varsayalım. Yukarıdaki alana 'adgroup' eklediğinizde bu sorguya karşılık gelen değeri de depolamış olursunuz.
+
+`gclid` = Google Click ID
+`fbclid` = Facebook Click ID
+
+#### 2. Parametreleri Yakala
+
+Kullanıcı siteye bir linkten geldiğinde, script URL’de bu parametreleri arar ve bulduklarını bir nesnede topluyor. Daha sonrasında iki farklı şekilde depolayabilir, ayrı kaynakları takip edebiliriz.
+
+#### 3. Local Storage ile 30 Gün Boyunca Sakla
+
+İlk ziyaret sırasında, bu parametreler localStorage’da 30 gün boyunca saklanır. Yani, kullanıcı siteye bir kampanya linkiyle girdiğinde, bu bilgi kaybolmaz. 30 gün sonra ise otomatik olarak temizlenir. Burada 30 gün sınırını kaldırmamız durumunda kullanıcı tarayıcı verilerini temizleyene kadar bu parametreler tarayıcıda tutulur, fakat çoğu reklam platformunun ilişkilendirme aralığı 28-30 gün olduğu için bu sürede tutmak faydalı.
+
+Paylaşmış olduğum script'te aşağıdaki satır üzerinde güncelleme yaparak yerel depolamada saklanacağı süreyi belirleyebilirsiniz.
+
+```javascript
+const EXPIRY_DAYS = 30; // Saklama süresini gün cinsinden buraya giriyorsunuz.
+const LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+// Totalde salise cinsinden hesaplanır. 2. satırda bir işlem yapmayın.
+```
+
+#### 4. Session Storage ile Oturum Boyunca Sakla
+
+Ayrıca, parametreler sessionStorage’a da yazılır. Bu sayede kullanıcı sekmeyi kapatana kadar parametreler kolayca erişilebilir olur. Her yeni oturumda ilk bulunan parametreler tekrar saklanır. Burada özel bir takım takip sistemi kurarak ilk oturum ve son oturum kıyası yapabilirsiniz.
+
+#### 5. JavaScript ile Kolayca Erişim
+
+İsterseniz, window.trackingParams ile yakalanan parametrelere başka scriptlerden de erişebilirsiniz.
+
+```javascript
+console.log(window.trackingParams);
+```
+
+### Bu Script’i Nerelerde Kullanabilirsiniz?
+
+*   **Formlarda ön doldurma:** Kayıt veya iletişim formlarında, kullanıcıya ait kampanya bilgisini otomatik olarak doldurabilirsiniz. Yakında buna dair bir makale paylaşacağım.
+*   **Analytics entegrasyonu:** Google Analytics, Facebook Pixel gibi araçlara kendi izleme parametrelerinizi göndermek için kullanabilirsiniz.
+*   **Kişiselleştirilmiş içerik:** Kullanıcının geldiği trafik kaynağı veya kampanya parametrelerine göre web sitenizde kişiselleştirilmiş içerikler gösterebilirsiniz. A/B testing, kişiselleştirme ve CRO (Conversion Rate Optimization) araçları sayesinde, her ziyaretçiye özel mesajlar ve kampanya teklifleri sunmak mümkündür. Bu sayede kullanıcı deneyimini geliştirip dönüşüm oranlarınızı artırabilirsiniz.
+
+`<body>...</body>` içerisine ekleyeceğiniz kodun tamamı:
+
+```html
+<script>
+(function trackUrlParams() {
+    const TRACKED_PARAMS = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+        'gclid',
+        'fbclid'
+    ];
+    const searchParams = new URLSearchParams(window.location.search);
+    let foundParams = {};
+    for (const key of TRACKED_PARAMS) {
+        if (searchParams.has(key)) {
+            foundParams[key] = searchParams.get(key);
+        }
+    }
+    const LS_KEY = 'trackingParams';
+    const LS_EXP_KEY = 'trackingParams_expiry';
+    const now = Date.now();
+    const EXPIRY_DAYS = 30; // Saklama süresi (gün)
+    const LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+    if (Object.keys(foundParams).length > 0) {
+        if (!localStorage.getItem(LS_KEY) || Number(localStorage.getItem(LS_EXP_KEY)) < now) {
+            localStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+            localStorage.setItem(LS_EXP_KEY, now + LS_EXPIRY_MS);
+        }
+    } else {
+        const exp = Number(localStorage.getItem(LS_EXP_KEY));
+        if (exp && exp < now) {
+            localStorage.removeItem(LS_KEY);
+            localStorage.removeItem(LS_EXP_KEY);
+        }
+    }
+    if (Object.keys(foundParams).length > 0) {
+        sessionStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+    } else {
+        sessionStorage.removeItem(LS_KEY);
+    }
+    window.trackingParams = foundParams;
+})();
+</script>
+```
+
+Google Tag Manager'da kullanabileceğiniz Custom HTML kodu:
+
+```html
+<script>
+(function trackUrlParams() {
+    var TRACKED_PARAMS = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+        'gclid',
+        'fbclid'
+    ];
+    // URLSearchParams yerine klasik yöntem:
+    function getQueryParams() {
+        var params = {};
+        var query = window.location.search.substring(1);
+        var pairs = query.split('&');
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i].split('=');
+            if (pair[0]) {
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+            }
+        }
+        return params;
+    }
+    var searchParams = getQueryParams();
+    var foundParams = {};
+    for (var i = 0; i < TRACKED_PARAMS.length; i++) {
+        var key = TRACKED_PARAMS[i];
+        if (searchParams.hasOwnProperty(key)) {
+            foundParams[key] = searchParams[key];
+        }
+    }
+    var LS_KEY = 'trackingParams';
+    var LS_EXP_KEY = 'trackingParams_expiry';
+    var now = (new Date()).getTime();
+    var EXPIRY_DAYS = 30; // Saklama süresi (gün)
+    var LS_EXP_KEY = 'trackingParams_expiry';
+    var now = (new Date()).getTime();
+    var EXPIRY_DAYS = 30; // Saklama süresi (gün)
+    var LS_EXPIRY_MS = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+    if (Object.keys(foundParams).length > 0) {
+        if (!localStorage.getItem(LS_KEY) || Number(localStorage.getItem(LS_EXP_KEY)) < now) {
+            localStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+            localStorage.setItem(LS_EXP_KEY, now + LS_EXPIRY_MS);
+        }
+    } else {
+        var exp = Number(localStorage.getItem(LS_EXP_KEY));
+        if (exp && exp < now) {
+            localStorage.removeItem(LS_KEY);
+            localStorage.removeItem(LS_EXP_KEY);
+        }
+    }
+    if (Object.keys(foundParams).length > 0) {
+        sessionStorage.setItem(LS_KEY, JSON.stringify(foundParams));
+    } else {
+        sessionStorage.removeItem(LS_KEY);
+    }
+    window.trackingParams = foundParams;
+})();
+</script>
+```
+
+Bir sonraki makalede görüşmek üzere.

@@ -3,6 +3,7 @@ import '@once-ui-system/core/css/tokens.css';
 import '@/resources/custom.css'
 
 import classNames from "classnames";
+import { Analytics } from '@vercel/analytics/next';
 
 import { baseURL, meta, fonts, effects, style, dataStyle } from "@/resources/once-ui.config";
 import { Meta, Schema,  Column, Flex, opacity, SpacingToken, Background} from "@once-ui-system/core";
@@ -152,6 +153,7 @@ export default function RootLayout({
           />
           <Header />
           {children}
+          <Analytics />
         </Column>
       </Providers>
     </Flex>

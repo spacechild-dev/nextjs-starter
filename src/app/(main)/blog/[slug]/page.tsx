@@ -10,6 +10,8 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import * as analytics from "@/lib/analytics";
 import { getAllBlogPosts } from "@/lib/blog";
 
+export const runtime = "edge";
+
 interface BlogPostProps {
   params: Promise<{ slug: string }>;
 }

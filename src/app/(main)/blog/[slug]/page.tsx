@@ -25,7 +25,7 @@ interface BlogPostProps {
 
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
-  const lang: "en" | "tr" = "en"; // Type-safe language definition
+  const lang = "en" as string; // Use type assertion to allow comparison
 
   // Try to load language specific file first
   let filePath = path.join(process.cwd(), "content/blog", `${slug}-${lang}.mdx`);

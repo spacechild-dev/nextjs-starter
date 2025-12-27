@@ -32,15 +32,24 @@ export default function ResumePage() {
   const profajDuration = formatDuration(profajStart, profajEnd);
 
   const DurationBadge = ({ children }: { children: React.ReactNode }) => (
-    <InlineCode
+    <span
       style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
         color: "var(--emerald-strong)",
-        borderColor: "var(--emerald-alpha-weak)",
+        border: "1px solid var(--emerald-alpha-medium)",
         backgroundColor: "var(--emerald-alpha-weak)",
+        borderRadius: "var(--radius-s)",
+        padding: "2px 8px",
+        fontSize: "12px",
+        fontWeight: 500,
+        height: "24px",
+        whiteSpace: "nowrap",
       }}
     >
       {children}
-    </InlineCode>
+    </span>
   );
 
   return (
@@ -70,7 +79,7 @@ export default function ResumePage() {
                 href="https://github.com/spacechild-dev" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ color: "var(--brand-strong)", textDecoration: "none" }}
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
               >
                 GitHub
               </a>
@@ -81,7 +90,7 @@ export default function ResumePage() {
                 href="https://linkedin.com/in/dagkanbayramoglu" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ color: "var(--brand-strong)", textDecoration: "none" }}
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
               >
                 LinkedIn
               </a>

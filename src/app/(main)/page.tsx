@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Text, Button, Column, Badge, Flex, Row, Icon } from "@once-ui-system/core";
+import { Heading, Text, Button, Column, Flex, Row, Icon } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
 import { FaGithub, FaLinkedin, FaEnvelope, FaSpotify, FaLastfm } from "react-icons/fa";
 import { SiDiscogs } from "react-icons/si";
@@ -11,6 +11,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import CTALink from "@/components/CTALink";
 import ContactForm from "@/components/ContactForm";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -34,15 +35,43 @@ export default function Home() {
 
   return (
     <Column fillWidth horizontal="center">
-      {/* Hero Section - 80% Height Centered */}
+      {/* Hero Section - 95% Height Centered */}
       <Column
         fillWidth
         horizontal="center"
         vertical="center"
         paddingX="l"
-        style={{ minHeight: "80vh" }}
+        style={{ minHeight: "95vh", position: "relative", overflow: "hidden" }}
       >
-        <Column maxWidth="m" horizontal="center" gap="48" align="center">
+        {/* Card Rain Effect */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 0,
+            opacity: 0.3,
+          }}
+        >
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: -20, x: Math.random() * 1000 - 500 }}
+              animate={{ y: 800 }}
+              transition={{
+                duration: 5 + Math.random() * 5,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 5,
+              }}
+              style={{ position: "absolute", fontSize: "16px", left: "50%" }}
+            >
+              🎴
+            </motion.div>
+          ))}
+        </div>
+
+        <Column maxWidth="m" horizontal="center" gap="48" align="center" style={{ zIndex: 1 }}>
           <Column gap="32" horizontal="center">
             <Text
               variant="body-default-l"
@@ -103,7 +132,15 @@ export default function Home() {
               </Flex>
             </CTALink>
 
-            <Button variant="secondary" size="m" onClick={() => setIsContactOpen(true)}>
+            <Button
+              size="m"
+              onClick={() => setIsContactOpen(true)}
+              style={{ 
+                backgroundColor: "var(--emerald-strong)", 
+                color: "white",
+                border: "1px solid var(--emerald-alpha-medium)" 
+              }}
+            >
               <Flex gap="8" vertical="center">
                 <FaEnvelope /> Get in Touch
               </Flex>
@@ -120,14 +157,6 @@ export default function Home() {
         horizontal="center"
         paddingY="80"
         paddingX="l"
-        background="surface"
-        style={{
-          position: "relative",
-          backgroundImage:
-            "radial-gradient(var(--neutral-alpha-weak) 1px, transparent 1px), radial-gradient(var(--neutral-alpha-weak) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0, 20px 20px",
-        }}
       >
         <Column maxWidth="m" fillWidth gap="32">
           <Row fillWidth horizontal="start" vertical="center">

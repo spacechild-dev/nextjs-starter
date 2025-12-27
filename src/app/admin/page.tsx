@@ -51,7 +51,7 @@ export default function AdminLoginPage() {
       <Background
         gradient={{
           display: true,
-          opacity: 0.4,
+          opacity: 40,
           x: 50,
           y: 0,
           width: 100,
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
         }}
         dots={{
           display: true,
-          opacity: 0.2,
+          opacity: 20,
           size: "2",
         }}
       />
@@ -112,7 +112,6 @@ export default function AdminLoginPage() {
               variant="primary"
               fillWidth
               loading={loading}
-              marginTop="16"
             >
               Giriş Yap
             </Button>

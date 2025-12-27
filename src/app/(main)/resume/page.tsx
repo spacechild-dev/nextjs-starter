@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Text, Column, Flex, Row, Line, Button } from "@once-ui-system/core";
+import { Heading, Text, Column, Flex, Row, Line, InlineCode } from "@once-ui-system/core";
 import { useLanguage } from "@/context/LanguageContext";
 import { skills } from "@/resources/skills.config";
 
@@ -14,11 +14,11 @@ export default function ResumePage() {
     const months = totalMonths % 12;
 
     if (years >= 1) {
-      const yearStr = years === 1 ? (language === "tr" ? "yıl" : "yr") : (language === "tr" ? "yıl" : "yrs");
-      const monthStr = months > 0 ? ` ${months} ${language === "tr" ? "ay" : "mos"}` : "";
+      const yearStr = years === 1 ? (language === "tr" ? "yıl" : "year") : (language === "tr" ? "yıl" : "years");
+      const monthStr = months > 0 ? ` ${months} ${language === "tr" ? "ay" : "months"}` : "";
       return `${years} ${yearStr}${monthStr}`;
     }
-    return `${totalMonths < 1 ? 1 : totalMonths} ${language === "tr" ? "ay" : "mos"}`;
+    return `${totalMonths < 1 ? 1 : totalMonths} ${language === "tr" ? "ay" : "months"}`;
   };
 
   const optdomStart = new Date(2025, 9);
@@ -30,6 +30,27 @@ export default function ResumePage() {
   const optdomDuration = formatDuration(optdomStart);
   const roipublicDuration = formatDuration(roipublicStart, roipublicEnd);
   const profajDuration = formatDuration(profajStart, profajEnd);
+
+  const DurationBadge = ({ children }: { children: React.ReactNode }) => (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "var(--emerald-strong)",
+        border: "1px solid var(--emerald-alpha-medium)",
+        backgroundColor: "var(--emerald-alpha-weak)",
+        borderRadius: "var(--radius-s)",
+        padding: "2px 8px",
+        fontSize: "12px",
+        fontWeight: 500,
+        height: "24px",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {children}
+    </span>
+  );
 
   return (
     <Column
@@ -53,13 +74,27 @@ export default function ResumePage() {
               hello@dagkanbayramoglu.com
             </Text>
             <Line vert background="neutral-alpha-weak" height="12" />
-            <Button href="https://github.com/spacechild-dev" variant="tertiary" size="s">
-              GitHub
-            </Button>
+            <InlineCode>
+              <a 
+                href="https://github.com/spacechild-dev" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
+              >
+                GitHub
+              </a>
+            </InlineCode>
             <Line vert background="neutral-alpha-weak" height="12" />
-            <Button href="https://linkedin.com/in/dagkanbayramoglu" variant="tertiary" size="s">
-              LinkedIn
-            </Button>
+            <InlineCode>
+              <a 
+                href="https://linkedin.com/in/dagkanbayramoglu" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
+              >
+                LinkedIn
+              </a>
+            </InlineCode>
           </Flex>
         </Column>
 
@@ -88,7 +123,7 @@ export default function ResumePage() {
                 OPTDCOM
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Ekim 2025" : "Oct 2025"} – {t("career.present")} ({optdomDuration} {language === "tr" ? "ay" : "mos"})
+                {language === "tr" ? "Ekim 2025" : "Oct 2025"} – {t("career.present")} <DurationBadge>{optdomDuration}</DurationBadge>
               </Text>
             </Row>
             <Column
@@ -118,7 +153,7 @@ export default function ResumePage() {
                 ROIPUBLIC
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Şubat 2024 – Ekim 2025" : "Feb 2024 – Oct 2025"} ({roipublicDuration} {language === "tr" ? "ay" : "mos"})
+                {language === "tr" ? "Şubat 2024 – Ekim 2025" : "Feb 2024 – Oct 2025"} <DurationBadge>{roipublicDuration}</DurationBadge>
               </Text>
             </Row>
             <Column
@@ -170,7 +205,7 @@ export default function ResumePage() {
                 PROFAJ
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Şubat 2022 – Şubat 2024" : "Feb 2022 – Feb 2024"} ({profajDuration} {language === "tr" ? "ay" : "mos"})
+                {language === "tr" ? "Şubat 2022 – Şubat 2024" : "Feb 2022 – Feb 2024"} <DurationBadge>{profajDuration}</DurationBadge>
               </Text>
             </Row>
             <Column
@@ -256,7 +291,7 @@ export default function ResumePage() {
           <Flex gap="16" wrap horizontal="center" padding="16">
             {skills.map((skill) => {
               // Font size based on level (1 to 10)
-              const fontSize = 12 + (skill.level * 2);
+              const fontSize = 12 + (skill.level * 1.2);
               const opacity = 0.4 + (skill.level * 0.06);
               
               return (

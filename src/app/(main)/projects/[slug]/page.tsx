@@ -109,7 +109,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 </Flex>
               ))}
             </Flex>
-            <Row gap="12">
+import { Github, Coffee } from "lucide-react";
+// ... imports
+
+// ... existing code ...
+
+            <Row gap="12" wrap>
               {project.href && (
                 <CTALink
                   projectTitle={project.title}
@@ -127,9 +132,21 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   variant="secondary"
                   size="s"
                 >
-                  Source
+                  <Flex gap="8" vertical="center">
+                    <Github size={16} /> Source
+                  </Flex>
                 </CTALink>
               )}
+              <Button
+                href="https://buymeacoffee.com/dagkan"
+                variant="secondary"
+                size="s"
+                target="_blank"
+              >
+                <Flex gap="8" vertical="center">
+                  <Coffee size={16} /> Support
+                </Flex>
+              </Button>
             </Row>
           </Column>
           <Flex flex={1} style={{ minWidth: "300px" }}>

@@ -144,7 +144,7 @@ export const Header = () => {
     >
       <Row
         vertical="center"
-        gap="12"
+        gap="0"
         style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
       >
         {/* Main Nav Capsule - Theme Aware Background */}
@@ -334,7 +334,7 @@ export const Header = () => {
           </Row>
         </Flex>
 
-        {/* Now Playing Layer - Floating Island */}
+        {/* Now Playing Layer - Slides out from behind */}
         <AnimatePresence>
           {track && (
             <motion.div
@@ -344,20 +344,25 @@ export const Header = () => {
               transition={{ type: "spring", stiffness: 200, damping: 30 }}
               className="hide-mobile"
               style={{
-                paddingLeft: "12px",
+                marginLeft: "-24px",
+                paddingLeft: "36px",
                 paddingRight: "16px",
                 background: theme === "light" ? "rgba(240, 240, 240, 0.9)" : "var(--neutral-background-medium)",
                 backdropFilter: "blur(16px)",
                 height: "48px",
                 display: "flex",
                 alignItems: "center",
-                borderRadius: "24px",
                 border: "1px solid var(--neutral-alpha-weak)",
+                borderLeft: "none",
+                borderTopRightRadius: "24px",
+                borderBottomRightRadius: "24px",
                 boxShadow: "var(--shadow-elevation-dark-two)",
-                zIndex: 1,
+                zIndex: -1,
                 overflow: "hidden",
                 whiteSpace: "nowrap",
                 transition: "background 0.3s ease",
+                maskImage: "linear-gradient(to right, transparent 24px, black 24px)",
+                WebkitMaskImage: "linear-gradient(to right, transparent 24px, black 24px)",
               }}
             >
               <a

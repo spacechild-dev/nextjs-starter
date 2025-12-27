@@ -16,6 +16,7 @@ import {
 } from "@once-ui-system/core";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { DynamicAnalytics } from "@/components/DynamicAnalytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -98,8 +99,8 @@ export default function RootLayout({
                   })};
                   
                   if (window.location.hostname.includes('daiquiri')) {
-                    config.brand = 'amber';
-                    config.accent = 'amber';
+                    config.brand = 'yellow';
+                    config.accent = 'yellow';
                   } else {
                     config.brand = 'emerald';
                     config.accent = 'emerald';
@@ -178,6 +179,7 @@ export default function RootLayout({
           />
           <Header />
           <main className="relative z-10 flex flex-col flex-1">{children}</main>
+          <Footer />
           <SpeedInsights />
         </Column>
       </Providers>

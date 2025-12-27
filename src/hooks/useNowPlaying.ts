@@ -6,7 +6,7 @@ export interface Track {
   name: string;
   artist: { "#text": string };
   album: { "#text": string };
-  image: { "#text": string }[];
+  image: { "#text": string; size: string }[];
   "@attr"?: { nowplaying: string };
 }
 

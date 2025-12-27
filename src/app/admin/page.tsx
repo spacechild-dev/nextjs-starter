@@ -112,7 +112,6 @@ export default function AdminLoginPage() {
               variant="primary"
               fillWidth
               loading={loading}
-              marginTop="16"
             >
               Giriş Yap
             </Button>

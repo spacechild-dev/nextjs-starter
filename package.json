@@ -14,6 +14,8 @@
     "@once-ui-system/core": "latest",
     "@supabase/supabase-js": "^2.47.10",
     "@vercel/speed-insights": "^1.3.1",
+    "autoprefixer": "^10.4.23",
+    "caniuse-lite": "^1.0.30001761",
     "classnames": "^2.5.1",
     "framer-motion": "^12.23.26",
     "gray-matter": "^4.0.3",

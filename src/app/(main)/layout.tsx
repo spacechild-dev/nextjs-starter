@@ -60,6 +60,23 @@ export default function RootLayout({
       <head>
         <GoogleAnalytics />
         <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Dağkan Bayramoğlu",
+              "url": "https://dagkanbayramoglu.com",
+              "jobTitle": "Digital Performance and Media Account Manager",
+              "sameAs": [
+                "https://github.com/spacechild-dev",
+                "https://linkedin.com/in/dagkanbayramoglu",
+                "https://www.last.fm/user/dagkan"
+              ]
+            }),
+          }}
+        />
+        <script
           id="theme-init"
           dangerouslySetInnerHTML={{
             __html: `

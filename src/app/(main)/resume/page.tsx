@@ -199,8 +199,8 @@ export default function ResumePage() {
                 <Row horizontal="between" vertical="start">
                   <Text variant="label-strong-m">
                     {language === "tr"
-                      ? "Dijital Performans Uzmanı (İŞKUR Programı Dahil)"
-                      : "Digital Performance Specialist (Inc. ISKUR Program)"}
+                      ? "Dijital Performans Uzmanı"
+                      : "Digital Performance Specialist"}
                   </Text>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
                     {language === "tr" ? "Şubat 2022 – Mart 2023" : "Feb 2022 – Mar 2023"}
@@ -208,8 +208,8 @@ export default function ResumePage() {
                 </Row>
                 <Text variant="body-default-s" onBackground="neutral-weak">
                   {language === "tr"
-                    ? "İŞKUR iş başı eğitim programı ile başlayan süreçte performans pazarlama temelleri ve kampanya yönetimi."
-                    : "Performance marketing fundamentals and campaign management, starting with the ISKUR on-the-job training program."}
+                    ? "Performans pazarlama temelleri, kampanya yönetimi ve veri analitiği süreçlerinin yönetimi."
+                    : "Managing performance marketing fundamentals, campaign management, and data analytics processes."}
                 </Text>
               </Column>
             </Column>
@@ -221,13 +221,30 @@ export default function ResumePage() {
           <Heading variant="heading-strong-l">{t("nav.certificates")}</Heading>
           <Line background="neutral-alpha-weak" />
           <Row gap="32" wrap>
-            <Column gap="8">
-              <Text variant="body-default-s">• Criteo Programmatic Manager</Text>
-              <Text variant="body-default-s">• Meta Certified Associate</Text>
+            <Column gap="12" flex={1}>
+              {[
+                { name: "Criteo Programmatic Campaign Manager", url: "https://verify.skilljar.com/c/ipwsetzti2ec" },
+                { name: "Criteo Programmatic Advertising Professional", url: "https://verify.skilljar.com/c/m8ikenqasaow" },
+                { name: "Meta Certified Digital Marketing Associate", url: "https://www.credly.com/badges/254af2d4-ce1e-40b5-8072-93e51fd6bfe9/" },
+                { name: "Apple Search Ads", url: "https://certification-searchads.apple.com/certificate/LJ7vY9rDFK" },
+              ].map((cert) => (
+                <a key={cert.name} href={cert.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <Text variant="body-default-s" onBackground="neutral-medium" className="hover-reveal">• {cert.name}</Text>
+                </a>
+              ))}
             </Column>
-            <Column gap="8">
-              <Text variant="body-default-s">• Google Ads Expert</Text>
-              <Text variant="body-default-s">• Apple Search Ads</Text>
+            <Column gap="12" flex={1}>
+              {[
+                { name: "Google Ads Search", url: "https://skillshop.credential.net/a820ba0d-107d-4af4-992c-ae113df8b07d" },
+                { name: "Google Ads Display", url: "https://skillshop.credential.net/d55595ae-f8c0-4e1a-b3b5-f9b7396b17fa" },
+                { name: "Google Ads Video", url: "https://skillshop.credential.net/07b0c6d2-5ae3-4b97-ad9c-81ac4df77954" },
+                { name: "Google Ads Shopping", url: "https://skillshop.credential.net/dc17edd7-d689-4758-9df6-e41010e0a47f" },
+                { name: "Google Ads App", url: "https://skillshop.credential.net/55215c1e-1d0e-46ad-98b9-9868ead5b66d" },
+              ].map((cert) => (
+                <a key={cert.name} href={cert.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <Text variant="body-default-s" onBackground="neutral-medium" className="hover-reveal">• {cert.name}</Text>
+                </a>
+              ))}
             </Column>
           </Row>
         </Column>

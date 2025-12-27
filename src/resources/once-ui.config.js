@@ -105,8 +105,8 @@ const effects = {
 const meta = {
   home: {
     path: "/",
-    title: "Dağkan",
-    description: "Yazılımcı değilim. Burada 'barely project' dediğim projelerimi paylaşıyorum.",
+    title: "Dağkan Bayramoğlu | Performance Marketing & Tracking",
+    description: "Personal portfolio and blog of Dağkan Bayramoğlu. Expertise in Performance Marketing, Data Analytics, and Tracking Technologies.",
     image: "/images/og/home.jpg",
     canonical: "https://dagkanbayramoglu.com",
     robots: "index,follow",

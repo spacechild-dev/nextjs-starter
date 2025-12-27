@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Heading, Text, Button, Column, Flex, Row, Icon } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";

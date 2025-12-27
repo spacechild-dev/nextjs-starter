@@ -230,10 +230,11 @@ export const Header = () => {
                   transition={{
                     layout: {
                       type: "spring",
-                      stiffness: 200,
-                      damping: 30,
+                      stiffness: 180,
+                      damping: 25,
+                      mass: 1,
                     },
-                    opacity: { duration: 0.2 },
+                    opacity: { duration: 0.3, ease: "easeInOut" },
                   }}
                   style={{
                     height: "32px",
@@ -246,18 +247,19 @@ export const Header = () => {
                     padding: "0 12px",
                     overflow: "hidden",
                     minWidth: "32px",
+                    cursor: "pointer",
                   }}
                 >
                   <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
-                  <AnimatePresence initial={false}>
+                  <AnimatePresence initial={false} mode="wait">
                     {isHomeHovered && (
                       <motion.span
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: "auto" }}
-                        exit={{ opacity: 0, width: 0 }}
+                        initial={{ opacity: 0, width: 0, x: -5 }}
+                        animate={{ opacity: 1, width: "auto", x: 0 }}
+                        exit={{ opacity: 0, width: 0, x: -5 }}
                         transition={{
-                          duration: 0.3,
-                          ease: [0.23, 1, 0.32, 1], // Custom ease-out
+                          duration: 0.4,
+                          ease: [0.23, 1, 0.32, 1],
                         }}
                         style={{
                           marginLeft: "8px",

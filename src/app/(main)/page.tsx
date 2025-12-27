@@ -3,7 +3,8 @@
 import React from "react";
 import { Heading, Text, Button, Column, Badge, Flex, Row, Icon } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaSpotify, FaLastfm } from "react-icons/fa";
+import { SiDiscogs } from "react-icons/si";
 import { NowPlaying } from "@/components/NowPlaying";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
@@ -81,6 +82,24 @@ export default function Home() {
             <CTALink href={social.linkedin} variant="secondary" size="m">
               <Flex gap="8" vertical="center">
                 <FaLinkedin /> LinkedIn
+              </Flex>
+            </CTALink>
+
+            <CTALink href={social.spotify} variant="secondary" size="m">
+              <Flex gap="8" vertical="center">
+                <FaSpotify /> Spotify
+              </Flex>
+            </CTALink>
+
+            <CTALink href={social.lastfm} variant="secondary" size="m">
+              <Flex gap="8" vertical="center">
+                <FaLastfm /> Last.fm
+              </Flex>
+            </CTALink>
+
+            <CTALink href="https://www.discogs.com/user/dagkan" variant="secondary" size="m">
+              <Flex gap="8" vertical="center">
+                <SiDiscogs /> Discogs
               </Flex>
             </CTALink>
 

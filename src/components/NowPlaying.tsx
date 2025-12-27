@@ -67,11 +67,11 @@ export const NowPlaying = () => {
           {/* Album Cover */}
           <Flex
             style={{
-              width: "52px",
-              height: "52px",
+              width: "64px",
+              height: "64px",
               position: "relative",
               overflow: "hidden",
-              borderRadius: "10px",
+              borderRadius: "12px",
               flexShrink: 0,
               border: "1px solid var(--neutral-alpha-weak)",
             }}
@@ -143,16 +143,20 @@ export const NowPlaying = () => {
           style={{ textDecoration: "none", flexShrink: 0, alignSelf: "center" }}
         >
           <Flex
-            padding="8"
-            radius="full"
-            background="brand-alpha-weak"
-            style={{ transition: "transform 0.2s ease" }}
+            paddingX="12"
+            paddingY="6"
+            radius="m"
+            style={{
+              background: "rgba(213, 16, 7, 0.1)",
+              border: "1px solid rgba(213, 16, 7, 0.2)",
+              transition: "transform 0.2s ease",
+            }}
             vertical="center"
             gap="8"
           >
-            <SiLastdotfm className="text-brand-strong" size={18} />
-            <Text variant="label-strong-xs" onBackground="brand-strong" className="hide-desktop">
-              Listen on Last.fm
+            <SiLastdotfm style={{ color: "#d51007" }} size={14} />
+            <Text variant="code-default-xs" style={{ color: "#d51007", fontWeight: "bold" }}>
+              Now Playing
             </Text>
           </Flex>
         </a>

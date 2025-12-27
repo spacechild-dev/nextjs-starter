@@ -158,30 +158,30 @@ export const Header = () => {
         gap="0"
         style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
       >
-        {/* BETA Label - Wider and Responsive */}
-        <Flex
-          paddingX="24"
-          vertical="center"
-          className="hide-mobile"
-          style={{
-            backgroundColor: "var(--color-beta-bg)",
-            height: "48px",
-            borderTopLeftRadius: "24px",
-            borderBottomLeftRadius: "24px",
-            border: "1px solid var(--brand-alpha-medium)",
-            borderRight: "none",
-            boxShadow: "var(--shadow-elevation-dark-two)",
-            position: "relative",
-            zIndex: 1,
-            marginRight: "-24px",
-            paddingRight: "40px",
-          }}
-        >
-          <Text variant="code-default-xs" weight="strong" style={{ color: "white" }}>
-            BETA
-          </Text>
-        </Flex>
-
+                {/* BETA Label - Wider and Responsive */}
+                <div className="hide-mobile">
+                  <Flex
+                    paddingX="32"
+                    vertical="center"
+                    style={{
+                      backgroundColor: "var(--color-beta-bg)",
+                      height: "48px",
+                      borderTopLeftRadius: "24px",
+                      borderBottomLeftRadius: "24px",
+                      border: "1px solid var(--brand-alpha-medium)",
+                      borderRight: "none",
+                      boxShadow: "var(--shadow-elevation-dark-two)",
+                      position: "relative",
+                      zIndex: 1,
+                      marginRight: "-24px",
+                      paddingRight: "52px",
+                    }}
+                  >
+                    <Text variant="label-strong-xs" style={{ color: "white", letterSpacing: "0.05em" }}>
+                      BETA
+                    </Text>
+                  </Flex>
+                </div>
         {/* Main Nav Capsule - Theme Aware Background */}
         <Flex
           vertical="center"
@@ -260,54 +260,60 @@ export const Header = () => {
               </Link>
 
               {/* Desktop Mega Menu */}
-              <Row className="hide-mobile">
-                <MegaMenu menuGroups={menuGroups} />
-              </Row>
+              <div className="hide-mobile">
+                <Row>
+                  <MegaMenu menuGroups={menuGroups} />
+                </Row>
+              </div>
 
               {/* Mobile Menu Toggle */}
-              <Row className="hide-desktop">
-                <NavIcon
-                  isActive={isMobileMenuOpen}
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                />
-              </Row>
+              <div className="hide-desktop">
+                <Row>
+                  <NavIcon
+                    isActive={isMobileMenuOpen}
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  />
+                </Row>
+              </div>
             </Row>
 
-            <Row vertical="center" gap="8">
-              {/* Integrated Switcher Group */}
-              <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
-                <ToggleButton
-                  id="lang-en"
-                  size="s"
-                  selected={language === "en"}
-                  onClick={() => {
-                    setLanguage("en");
-                    analytics.trackLanguageChange("en");
-                  }}
-                >
-                  EN
-                </ToggleButton>
-                <ToggleButton
-                  id="lang-tr"
-                  size="s"
-                  selected={language === "tr"}
-                  onClick={() => {
-                    setLanguage("tr");
-                    analytics.trackLanguageChange("tr");
-                  }}
-                >
-                  TR
-                </ToggleButton>
-                <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
-                <IconButton
-                  id="theme-toggle"
-                  size="s"
-                  variant="tertiary"
-                  icon={theme === "dark" ? "sun" : "moon"}
-                  onClick={toggleTheme}
-                />
-              </Flex>
-            </Row>
+            <div className="hide-mobile">
+              <Row vertical="center" gap="8">
+                {/* Integrated Switcher Group */}
+                <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
+                  <ToggleButton
+                    id="lang-en"
+                    size="s"
+                    selected={language === "en"}
+                    onClick={() => {
+                      setLanguage("en");
+                      analytics.trackLanguageChange("en");
+                    }}
+                  >
+                    EN
+                  </ToggleButton>
+                  <ToggleButton
+                    id="lang-tr"
+                    size="s"
+                    selected={language === "tr"}
+                    onClick={() => {
+                      setLanguage("tr");
+                      analytics.trackLanguageChange("tr");
+                    }}
+                  >
+                    TR
+                  </ToggleButton>
+                  <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
+                  <IconButton
+                    id="theme-toggle"
+                    size="s"
+                    variant="tertiary"
+                    icon={theme === "dark" ? "sun" : "moon"}
+                    onClick={toggleTheme}
+                  />
+                </Flex>
+              </Row>
+            </div>
           </Row>
         </Flex>
       </Row>

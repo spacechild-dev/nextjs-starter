@@ -6,23 +6,27 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { headers } from "next/headers";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import * as analytics from "@/lib/analytics";
+import { getAllBlogPosts } from "@/lib/blog";
 
 interface BlogPostProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  const posts = getAllBlogPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
-  const headerList = await headers();
-  const host = headerList.get("host") || "";
-  const isTr = host.endsWith(".tr");
-  const lang = isTr ? "tr" : "en";
+  const lang = "en"; // Default to en for static generation
 
   // Try to load language specific file first
-  let filePath = path.join(process.cwd(), "src/content/blog", `${slug}-${lang}.mdx`);
+  let filePath = path.join(process.cwd(), "content/blog", `${slug}-${lang}.mdx`);
 
   if (!fs.existsSync(filePath)) {
     // Fallback to default slug if exists, or en

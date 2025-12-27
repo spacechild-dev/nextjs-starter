@@ -1,14 +1,13 @@
 import { notFound } from "next/navigation";
-import { getProject } from "@/lib/projects";
+import { getProject, getAllProjects } from "@/lib/projects";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import Link from "next/link";
-import Image from "next/image";
-import { Heading, Text, Column, Flex, Row, Button, Line, Scroller } from "@once-ui-system/core";
-import { HiOutlineArrowLeft, HiOutlineCheckCircle } from "react-icons/hi2";
-import { CodeBlock } from "@/components/CodeBlock";
-import AnalyticsTracker from "@/components/AnalyticsTracker";
-import CTALink from "@/components/CTALink";
-import * as analytics from "@/lib/analytics";
+
+export async function generateStaticParams() {
+  const projects = getAllProjects();
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

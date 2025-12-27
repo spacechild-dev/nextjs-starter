@@ -8,8 +8,8 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   const getIcon = (slug: string) => {
-    if (slug.includes("spotify")) return <FaSpotify size={20} className="text-emerald-500" />;
-    return <FaShieldAlt size={20} className="text-blue-500" />;
+    if (slug.includes("spotify")) return <FaSpotify size={20} style={{ color: "var(--brand-solid-strong)" }} />;
+    return <FaShieldAlt size={20} style={{ color: "var(--brand-solid-strong)" }} />;
   };
 
   return (

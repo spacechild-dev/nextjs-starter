@@ -7,7 +7,6 @@ import {
   Input,
   Textarea,
   Dialog,
-  Heading,
   Text,
   useToast,
 } from "@once-ui-system/core";
@@ -111,10 +110,9 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
   };
 
   return (
-    <Dialog isOpen={isOpen} onClose={onClose}>
+    <Dialog isOpen={isOpen} onClose={onClose} title="Get in Touch">
       <Flex direction="column" gap="24" padding="8">
         <Flex direction="column" gap="8">
-          <Heading variant="heading-strong-l">Get in Touch</Heading>
           <Text variant="body-default-m" onBackground="neutral-weak">
             Fill out the form below and I'll get back to you shortly.
           </Text>

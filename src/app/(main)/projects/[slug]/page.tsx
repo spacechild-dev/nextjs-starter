@@ -9,6 +9,7 @@ import { CodeBlock } from "@/components/CodeBlock";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import CTALink from "@/components/CTALink";
 import * as analytics from "@/lib/analytics";
+import { Github, Coffee } from "lucide-react";
 
 export const dynamic = "force-static";
 
@@ -109,11 +110,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 </Flex>
               ))}
             </Flex>
-import { Github, Coffee } from "lucide-react";
-// ... imports
-
-// ... existing code ...
-
             <Row gap="12" wrap>
               {project.href && (
                 <CTALink

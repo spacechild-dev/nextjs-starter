@@ -24,15 +24,17 @@ import { style, dataStyle } from "../resources/once-ui.config";
 import { iconLibrary } from "../resources/icons";
 import { LanguageProvider } from "../context/LanguageContext";
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [currentBrand, setCurrentBrand] = useState(style.brand);
+export function Providers({ children, domain }: { children: React.ReactNode; domain?: string }) {
+  const [currentBrand, setCurrentBrand] = useState<Schemes>(
+    domain?.includes("daiquiri") ? "yellow" : (style.brand as Schemes)
+  );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (window.location.hostname.includes("daiquiri")) {
-        setCurrentBrand("amber"); // Closest to Classic Daiquiri (Lime/Yellow)
+        setCurrentBrand("yellow");
       } else {
-        setCurrentBrand("emerald"); // Personal site
+        setCurrentBrand("emerald");
       }
     }
   }, []);

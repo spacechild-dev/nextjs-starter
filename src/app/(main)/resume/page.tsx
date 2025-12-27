@@ -37,15 +37,17 @@ export default function ResumePage() {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        color: "var(--emerald-strong)",
-        border: "1px solid var(--emerald-alpha-medium)",
-        backgroundColor: "var(--emerald-alpha-weak)",
+        color: "var(--brand-on-background-medium)",
+        border: "1px solid var(--brand-alpha-weak)",
+        backgroundColor: "var(--brand-alpha-weak)",
         borderRadius: "var(--radius-s)",
-        padding: "2px 8px",
-        fontSize: "12px",
-        fontWeight: 500,
-        height: "24px",
+        padding: "0px 6px",
+        fontSize: "10px",
+        fontWeight: 600,
+        height: "18px",
         whiteSpace: "nowrap",
+        marginLeft: "8px",
+        fontFamily: 'var(--font-code)'
       }}
     >
       {children}
@@ -69,28 +71,27 @@ export default function ResumePage() {
               ? "Dijital Performans ve Medya Hesap Yöneticisi"
               : "Digital Performance and Media Account Manager"}
           </Text>
-          <Flex gap="12" wrap vertical="center">
+          <Flex gap="8" wrap vertical="center">
             <Text variant="body-default-s" onBackground="neutral-weak">
               hello@dagkanbayramoglu.com
             </Text>
-            <Line vert background="neutral-alpha-weak" height="12" />
+            <Line vert background="neutral-alpha-weak" height="12" marginX="4" />
             <InlineCode>
               <a 
                 href="https://github.com/spacechild-dev" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "11px", padding: "0 2px" }}
               >
                 GitHub
               </a>
             </InlineCode>
-            <Line vert background="neutral-alpha-weak" height="12" />
             <InlineCode>
               <a 
                 href="https://linkedin.com/in/dagkanbayramoglu" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "12px" }}
+                style={{ color: "var(--brand-strong)", textDecoration: "none", fontSize: "11px", padding: "0 2px" }}
               >
                 LinkedIn
               </a>
@@ -122,9 +123,12 @@ export default function ResumePage() {
               <Heading variant="heading-strong-m" onBackground="brand-strong">
                 OPTDCOM
               </Heading>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Ekim 2025" : "Oct 2025"} – {t("career.present")} <DurationBadge>{optdomDuration}</DurationBadge>
-              </Text>
+              <Row vertical="center">
+                <Text variant="code-default-xs" onBackground="neutral-weak">
+                  {language === "tr" ? "Ekim 2025" : "Oct 2025"} – {t("career.present")}
+                </Text>
+                <DurationBadge>{optdomDuration}</DurationBadge>
+              </Row>
             </Row>
             <Column
               paddingLeft="24"
@@ -152,9 +156,12 @@ export default function ResumePage() {
               <Heading variant="heading-strong-m" onBackground="brand-strong">
                 ROIPUBLIC
               </Heading>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Şubat 2024 – Ekim 2025" : "Feb 2024 – Oct 2025"} <DurationBadge>{roipublicDuration}</DurationBadge>
-              </Text>
+              <Row vertical="center">
+                <Text variant="code-default-xs" onBackground="neutral-weak">
+                  {language === "tr" ? "Şubat 2024 – Ekim 2025" : "Feb 2024 – Oct 2025"}
+                </Text>
+                <DurationBadge>{roipublicDuration}</DurationBadge>
+              </Row>
             </Row>
             <Column
               paddingLeft="24"
@@ -168,7 +175,7 @@ export default function ResumePage() {
                       ? "Performans Pazarlama Ekip Lideri"
                       : "Performance Marketing Team Lead"}
                   </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                  <Text variant="code-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
                     {language === "tr" ? "Kasım 2024 – Ekim 2025" : "Nov 2024 – Oct 2025"}
                   </Text>
                 </Row>
@@ -185,7 +192,7 @@ export default function ResumePage() {
                       ? "Sr. Performans Pazarlama Uzmanı"
                       : "Sr. Performance Marketing Executive"}
                   </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                  <Text variant="code-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
                     {language === "tr" ? "Şubat 2024 – Ekim 2024" : "Feb 2024 – Oct 2024"}
                   </Text>
                 </Row>
@@ -204,9 +211,12 @@ export default function ResumePage() {
               <Heading variant="heading-strong-m" onBackground="brand-strong">
                 PROFAJ
               </Heading>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {language === "tr" ? "Şubat 2022 – Şubat 2024" : "Feb 2022 – Feb 2024"} <DurationBadge>{profajDuration}</DurationBadge>
-              </Text>
+              <Row vertical="center">
+                <Text variant="code-default-xs" onBackground="neutral-weak">
+                  {language === "tr" ? "Şubat 2022 – Şubat 2024" : "Feb 2022 – Feb 2024"}
+                </Text>
+                <DurationBadge>{profajDuration}</DurationBadge>
+              </Row>
             </Row>
             <Column
               paddingLeft="24"
@@ -220,7 +230,7 @@ export default function ResumePage() {
                       ? "Dijital Pazarlama Ekip Lideri"
                       : "Digital Marketing Team Lead"}
                   </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                  <Text variant="code-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
                     {language === "tr" ? "Nisan 2023 – Şubat 2024" : "Apr 2023 – Feb 2024"}
                   </Text>
                 </Row>
@@ -237,7 +247,7 @@ export default function ResumePage() {
                       ? "Dijital Performans Uzmanı"
                       : "Digital Performance Specialist"}
                   </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                  <Text variant="code-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
                     {language === "tr" ? "Şubat 2022 – Mart 2023" : "Feb 2022 – Mar 2023"}
                   </Text>
                 </Row>

@@ -1,19 +1,21 @@
-"use client";
-
 import "@once-ui-system/core/css/styles.css";
 import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
 import { fonts } from "@/resources/once-ui.config";
-import { Flex, Column, Background, ToastProvider } from "@once-ui-system/core";
+import { Flex, Column, Background } from "@once-ui-system/core";
 import { Providers } from "@/components/Providers";
+import { headers } from "next/headers";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const domain = headersList.get("host") || "";
+
   return (
     <Flex
       as="html"
@@ -29,7 +31,7 @@ export default function AdminLayout({
       <head>
         <title>Admin Paneli - Dağkan Bayramoğlu</title>
       </head>
-      <Providers>
+      <Providers domain={domain}>
         <Column
           as="body"
           background="page"

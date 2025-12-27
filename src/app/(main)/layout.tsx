@@ -20,6 +20,8 @@ import { Footer } from "@/components/Footer";
 import { DynamicAnalytics } from "@/components/DynamicAnalytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+import { headers } from "next/headers";
+
 export async function generateMetadata() {
   return Meta.generate({
     title: meta.home.title,
@@ -33,11 +35,14 @@ export async function generateMetadata() {
   });
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const domain = headersList.get("host") || "";
+
   return (
     <Flex
       suppressHydrationWarning
@@ -127,7 +132,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <Providers>
+      <Providers domain={domain}>
         <Column
           as="body"
           background="page"

@@ -6,25 +6,19 @@ import {
   Flex,
   Text,
   Row,
-  MegaMenu,
-  MobileMegaMenu,
-  Dialog,
   Button,
-  Input,
-  Textarea,
   IconButton,
   ToggleButton,
   Line,
   NavIcon,
 } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
-import { Code, Disc, Mic2, Music2, Briefcase, Martini } from "lucide-react";
+import { Code, Disc, Mic2, Music2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import * as analytics from "@/lib/analytics";
 import { useNowPlaying } from "@/hooks/useNowPlaying";
-import { SiLastdotfm } from "react-icons/si";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -46,7 +40,7 @@ export const Header = () => {
   useEffect(() => {
     if (track) {
       const interval = setInterval(() => {
-        setInfoIndex((prev) => (prev + 1) % 3);
+        setInfoIndex((prev) => (prev + 1) % 2);
       }, 6000);
       return () => clearInterval(interval);
     }
@@ -70,60 +64,9 @@ export const Header = () => {
     analytics.trackThemeChange(newTheme);
   };
 
-  const menuGroups = [
-    {
-      id: "blog",
-      label: t("nav.blog"),
-      href: "/blog",
-    },
-    {
-      id: "projects",
-      label: t("nav.projects"),
-      href: "/projects",
-    },
-    {
-      id: "career",
-      label: t("nav.career"),
-      href: "/resume",
-    },
-  ];
-
-  // Mobile specific settings group
-  const mobileMenuGroups = [
-    ...menuGroups,
-    {
-      id: "settings",
-      label: language === "tr" ? "Ayarlar" : "Settings",
-      sections: [
-        {
-          title: language === "tr" ? "Dil ve Tema" : "Language & Theme",
-          links: [
-            {
-              label: language === "tr" ? "English" : "Türkçe",
-              href: "#",
-              icon: "globe",
-              onClick: () => {
-                const newLang = language === "en" ? "tr" : "en";
-                setLanguage(newLang);
-                analytics.trackLanguageChange(newLang);
-              },
-            },
-            {
-              label: theme === "dark" ? (language === "tr" ? "Aydınlık Mod" : "Light Mode") : (language === "tr" ? "Karanlık Mod" : "Dark Mode"),
-              href: "#",
-              icon: theme === "dark" ? "sun" : "moon",
-              onClick: toggleTheme,
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
   const trackInfo = track
     ? [
         { icon: <Music2 size={14} />, label: track.name },
-        { icon: <Disc size={14} />, label: track.album?.["#text"] || "Album" },
         { icon: <Mic2 size={14} />, label: track.artist["#text"] },
       ]
     : [];
@@ -142,227 +85,178 @@ export const Header = () => {
         pointerEvents: "none",
       }}
     >
-      <Row
-        vertical="center"
-        gap="0"
-        style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
-      >
-        {/* Main Nav Capsule - Theme Aware Background */}
-        <Flex
+      <Flex direction="column" horizontal="center" gap="8" style={{ width: '100%' }}>
+        <Row
           vertical="center"
-          paddingX="12"
-          radius="full"
-          style={{
-            background: theme === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(20, 20, 20, 0.6)",
-            backdropFilter: "blur(12px)",
-            height: "48px",
-            width: "fit-content",
-            minWidth: "auto",
-            border: "1px solid var(--neutral-alpha-weak)",
-            boxShadow: "var(--shadow-elevation-dark-two)",
-            position: "relative",
-            zIndex: 2,
-            maxWidth: "100%",
-            overflow: "hidden",
-            transition: "background 0.3s ease",
-          }}
+          gap="0"
+          style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
         >
-          <Row
+          {/* Main Nav Capsule */}
+          <Flex
             vertical="center"
-            fillWidth
-            horizontal="between"
-            gap="12"
-            style={{ position: "relative", zIndex: 1 }}
+            paddingX="12"
+            radius="full"
+            style={{
+              background: theme === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(20, 20, 20, 0.6)",
+              backdropFilter: "blur(12px)",
+              height: "48px",
+              width: "fit-content",
+              minWidth: "auto",
+              border: "1px solid var(--neutral-alpha-weak)",
+              boxShadow: "var(--shadow-elevation-dark-two)",
+              position: "relative",
+              zIndex: 2,
+              maxWidth: "100%",
+              overflow: "hidden",
+              transition: "background 0.3s ease",
+            }}
           >
-            <Row vertical="center" gap="12">
-              <Link
-                href="/"
-                style={{ textDecoration: "none" }}
-                onMouseEnter={() => setIsHomeHovered(true)}
-                onMouseLeave={() => setIsHomeHovered(false)}
-              >
-                <motion.div
-                  layout
-                  transition={{
-                    duration: 0.3,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    height: "32px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "var(--brand-alpha-weak)",
-                    border: "1px solid var(--brand-alpha-medium)",
-                    borderRadius: "9999px",
-                    padding: "0 12px",
-                    overflow: "hidden",
-                    minWidth: "32px",
-                    cursor: "pointer",
-                  }}
+            <Row vertical="center" fillWidth horizontal="between" gap="12">
+              <Row vertical="center" gap="12">
+                <Link
+                  href="/"
+                  style={{ textDecoration: "none" }}
+                  onMouseEnter={() => setIsHomeHovered(true)}
+                  onMouseLeave={() => setIsHomeHovered(false)}
                 >
-                  <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
-                  <AnimatePresence>
-                    {isHomeHovered && (
-                      <motion.span
-                        initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                        animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
-                        exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          ease: "easeInOut",
-                        }}
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: 900,
-                          textTransform: "uppercase",
-                          whiteSpace: "nowrap",
-                          color: "var(--brand-on-background-strong)",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {language === "tr" ? "Anasayfa" : "Home"}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </Link>
-
-              {/* Desktop Menu - Simple Links (MegaMenu is TODO) */}
-              <div className="hide-mobile">
-                <Row gap="8" vertical="center">
-                  <Button href="/blog" variant="tertiary" size="s">
-                    {t("nav.blog")}
-                  </Button>
-                  <Button 
-                    href={(isDaiquiri || process.env.NODE_ENV === 'development') ? "/projects" : "https://daiquiri.dev/projects"} 
-                    variant="tertiary" 
-                    size="s"
-                    target="_self"
+                  <motion.div
+                    layout
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    style={{
+                      height: "32px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "var(--brand-alpha-weak)",
+                      border: "1px solid var(--brand-alpha-medium)",
+                      borderRadius: "9999px",
+                      padding: "0 12px",
+                      overflow: "hidden",
+                      minWidth: "32px",
+                      cursor: "pointer",
+                    }}
                   >
-                    {t("nav.projects")}
-                  </Button>
-                  <Button 
-                    href={(!isDaiquiri || process.env.NODE_ENV === 'development') ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
-                    variant="tertiary" 
-                    size="s"
-                    target="_self"
-                  >
-                    {t("nav.career")}
-                  </Button>
-                </Row>
-              </div>
+                    <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
+                    <AnimatePresence>
+                      {isHomeHovered && (
+                        <motion.span
+                          initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                          animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
+                          exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 900,
+                            textTransform: "uppercase",
+                            whiteSpace: "nowrap",
+                            color: "var(--brand-on-background-strong)",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {language === "tr" ? "Anasayfa" : "Home"}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </Link>
 
-              {/* Mobile Menu Toggle */}
-              <div className="hide-desktop">
-                <Row>
+                <div className="hide-mobile">
+                  <Row gap="8" vertical="center">
+                    <Button href="/blog" variant="tertiary" size="s">
+                      {t("nav.blog")}
+                    </Button>
+                    <Button 
+                      href={(isDaiquiri || process.env.NODE_ENV === 'development') ? "/projects" : "https://daiquiri.dev/projects"} 
+                      variant="tertiary" 
+                      size="s"
+                      target="_self"
+                    >
+                      {t("nav.projects")}
+                    </Button>
+                    <Button 
+                      href={(!isDaiquiri || process.env.NODE_ENV === 'development') ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
+                      variant="tertiary" 
+                      size="s"
+                      target="_self"
+                    >
+                      {t("nav.career")}
+                    </Button>
+                  </Row>
+                </div>
+
+                <div className="hide-desktop">
                   <NavIcon
                     isActive={isMobileMenuOpen}
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   />
+                </div>
+              </Row>
+
+              <div className="hide-mobile">
+                <Row vertical="center" gap="8">
+                  <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
+                    <ToggleButton
+                      id="lang-en"
+                      size="s"
+                      selected={language === "en"}
+                      onClick={() => {
+                        setLanguage("en");
+                        analytics.trackLanguageChange("en");
+                      }}
+                    >
+                      EN
+                    </ToggleButton>
+                    <ToggleButton
+                      id="lang-tr"
+                      size="s"
+                      selected={language === "tr"}
+                      onClick={() => {
+                        setLanguage("tr");
+                        analytics.trackLanguageChange("tr");
+                      }}
+                    >
+                      TR
+                    </ToggleButton>
+                    <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
+                    <IconButton
+                      id="theme-toggle"
+                      size="s"
+                      variant="tertiary"
+                      icon={theme === "dark" ? "sun" : "moon"}
+                      onClick={toggleTheme}
+                    />
+                  </Flex>
                 </Row>
               </div>
             </Row>
+          </Flex>
+        </Row>
 
-            <div className="hide-mobile">
-              <Row vertical="center" gap="8">
-                {/* Integrated Switcher Group */}
-                <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
-                  <ToggleButton
-                    id="persona-main"
-                    size="s"
-                    selected={!isDaiquiri}
-                    onClick={() => {
-                      if (process.env.NODE_ENV === 'development') {
-                        console.log("Switching to Main Persona (Dev Mode)");
-                        // Optional: Simulating domain switch via query param could be added here
-                      } else if (isDaiquiri) {
-                        window.location.href = "https://dagkanbayramoglu.com";
-                      }
-                    }}
-                  >
-                    <Briefcase size={14} />
-                  </ToggleButton>
-                  <ToggleButton
-                    id="persona-daiquiri"
-                    size="s"
-                    selected={isDaiquiri}
-                    onClick={() => {
-                      if (process.env.NODE_ENV === 'development') {
-                        console.log("Switching to Daiquiri Persona (Dev Mode)");
-                      } else if (!isDaiquiri) {
-                        window.location.href = "https://daiquiri.dev";
-                      }
-                    }}
-                  >
-                    <Martini size={14} />
-                  </ToggleButton>
-                  <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
-                  <ToggleButton
-                    id="lang-en"
-                    size="s"
-                    selected={language === "en"}
-                    onClick={() => {
-                      setLanguage("en");
-                      analytics.trackLanguageChange("en");
-                    }}
-                  >
-                    EN
-                  </ToggleButton>
-                  <ToggleButton
-                    id="lang-tr"
-                    size="s"
-                    selected={language === "tr"}
-                    onClick={() => {
-                      setLanguage("tr");
-                      analytics.trackLanguageChange("tr");
-                    }}
-                  >
-                    TR
-                  </ToggleButton>
-                  <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
-                  <IconButton
-                    id="theme-toggle"
-                    size="s"
-                    variant="tertiary"
-                    icon={theme === "dark" ? "sun" : "moon"}
-                    onClick={toggleTheme}
-                  />
-                </Flex>
-              </Row>
-            </div>
-          </Row>
-        </Flex>
-
-        {/* Now Playing Layer - Slides out from behind */}
+        {/* Now Playing Layer */}
         <AnimatePresence>
           {track && (
             <motion.div
-              initial={{ x: -20, opacity: 0, width: 0 }}
-              animate={{ x: 0, opacity: 1, width: "auto" }}
-              exit={{ x: -20, opacity: 0, width: 0 }}
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 30 }}
               className="hide-mobile"
               style={{
-                marginLeft: "-24px",
-                paddingLeft: "36px",
+                pointerEvents: "auto",
+                paddingLeft: "12px",
                 paddingRight: "16px",
                 background: theme === "light" ? "rgba(240, 240, 240, 0.9)" : "var(--neutral-background-medium)",
                 backdropFilter: "blur(16px)",
-                height: "48px",
+                height: "40px",
                 display: "flex",
                 alignItems: "center",
+                borderRadius: "20px",
                 border: "1px solid var(--neutral-alpha-weak)",
-                borderLeft: "none",
-                borderTopRightRadius: "24px",
-                borderBottomRightRadius: "24px",
-                boxShadow: "var(--shadow-elevation-dark-two)",
-                zIndex: -1,
+                boxShadow: "var(--shadow-elevation-dark-one)",
+                zIndex: 1,
                 overflow: "hidden",
                 whiteSpace: "nowrap",
                 transition: "background 0.3s ease",
-                maskImage: "linear-gradient(to right, transparent 24px, black 24px)",
-                WebkitMaskImage: "linear-gradient(to right, transparent 24px, black 24px)",
               }}
             >
               <a
@@ -375,30 +269,20 @@ export const Header = () => {
                   <Flex
                     radius="xs"
                     style={{
-                      width: "32px",
-                      height: "32px",
+                      width: "24px",
+                      height: "24px",
                       overflow: "hidden",
                       border: "1px solid var(--neutral-alpha-weak)",
                     }}
                   >
                     <img
-                      src={
-                        track.image.find((img) => img.size === "small")?.["#text"] ||
-                        track.image[0]["#text"]
-                      }
+                      src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
                       alt="Album Art"
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </Flex>
 
-                  <div
-                    style={{
-                      height: "20px",
-                      overflow: "hidden",
-                      position: "relative",
-                      width: "160px",
-                    }}
-                  >
+                  <div style={{ height: "20px", overflow: "hidden", position: "relative", width: "160px" }}>
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={infoIndex}
@@ -437,10 +321,7 @@ export const Header = () => {
                       border: "1px solid rgba(213, 16, 7, 0.2)",
                     }}
                   >
-                    <Text
-                      variant="code-default-xs"
-                      style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}
-                    >
+                    <Text variant="code-default-xs" style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}>
                       NOW PLAYING
                     </Text>
                   </Flex>
@@ -449,17 +330,7 @@ export const Header = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </Row>
-
-      {/* Mobile Mega Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <MobileMegaMenu
-            menuGroups={[{ id: "home", label: t("nav.home"), href: "/" }, ...mobileMenuGroups]}
-            onClose={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      </Flex>
     </Flex>
   );
 };

@@ -127,7 +127,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                fillWidth
+                style={{ width: "100%" }}
               />
               <Input
                 label="Email Address"
@@ -136,7 +136,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                fillWidth
+                style={{ width: "100%" }}
               />
             </Flex>
             <Flex gap="16" wrap>
@@ -145,14 +145,14 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                fillWidth
+                style={{ width: "100%" }}
               />
               <Input
                 label="Position (Optional)"
                 name="position"
                 value={formData.position}
                 onChange={handleChange}
-                fillWidth
+                style={{ width: "100%" }}
               />
             </Flex>
             <Textarea
@@ -161,11 +161,10 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               value={formData.message}
               onChange={handleChange}
               required
-              fillWidth
-              style={{ minHeight: "120px" }}
+              style={{ minHeight: "120px", width: "100%" }}
             />
             <Flex horizontal="end" marginTop="8">
-              <Button type="submit" variant="primary" loading={loading} fillWidth>
+              <Button type="submit" variant="primary" loading={loading} style={{ width: "100%" }}>
                 Send Message
               </Button>
             </Flex>

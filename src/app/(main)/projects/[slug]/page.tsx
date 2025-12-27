@@ -10,6 +10,7 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import CTALink from "@/components/CTALink";
 import * as analytics from "@/lib/analytics";
 import { Github, Coffee } from "lucide-react";
+import { ProjectBanner } from "@/components/ProjectBanner";
 
 export const dynamic = "force-static";
 
@@ -150,11 +151,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               {project.img ? (
                 <Image src={project.img} alt={project.title} fill className="object-cover" />
               ) : (
-                <Flex fillWidth fillHeight center>
-                  <Text onBackground="neutral-weak" variant="code-default-s">
-                    Image Placeholder
-                  </Text>
-                </Flex>
+                <ProjectBanner title={project.title} tags={project.tags} />
               )}
             </div>
           </Flex>

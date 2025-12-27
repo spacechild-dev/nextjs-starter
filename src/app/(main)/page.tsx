@@ -140,12 +140,8 @@ export default function Home() {
 
             <Button
               size="m"
+              variant="primary"
               onClick={() => setIsContactOpen(true)}
-              style={{ 
-                backgroundColor: "var(--emerald-strong)", 
-                color: "white",
-                border: "1px solid var(--emerald-alpha-medium)" 
-              }}
             >
               <Flex gap="8" vertical="center">
                 <FaEnvelope /> Get in Touch

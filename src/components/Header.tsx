@@ -238,6 +238,7 @@ export const Header = () => {
                     href={(isDaiquiri || process.env.NODE_ENV === 'development') ? "/projects" : "https://daiquiri.dev/projects"} 
                     variant="tertiary" 
                     size="s"
+                    target="_self"
                   >
                     {t("nav.projects")}
                   </Button>
@@ -245,6 +246,7 @@ export const Header = () => {
                     href={(!isDaiquiri || process.env.NODE_ENV === 'development') ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
                     variant="tertiary" 
                     size="s"
+                    target="_self"
                   >
                     {t("nav.career")}
                   </Button>

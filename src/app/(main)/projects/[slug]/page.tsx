@@ -61,11 +61,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       return (
         <a
           {...props}
-          onClick={() => {
-            if (isExternal) {
-              analytics.trackOutboundClick(props.href);
-            }
-          }}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noopener noreferrer" : undefined}
           style={{ color: "var(--brand-on-background-medium)", textDecoration: "underline" }}

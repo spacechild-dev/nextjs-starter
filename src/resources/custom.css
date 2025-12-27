@@ -22,6 +22,19 @@ div[style*="borderRadius: 9999px"] {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+/* Responsive Utilities */
+@media (max-width: 639px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
 /* Example setup for custom colors */
 /* Generate at: https://once-ui.com/customize */
 /*

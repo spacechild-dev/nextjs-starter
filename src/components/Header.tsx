@@ -34,6 +34,7 @@ export const Header = () => {
   
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isNowPlayingOpen, setIsNowPlayingOpen] = useState(false);
+  const [isFloatingNowPlayingHovered, setIsFloatingNowPlayingHovered] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -72,272 +73,351 @@ export const Header = () => {
   ];
 
   return (
-    <Flex
-      as="header"
-      fillWidth
-      paddingTop="16"
-      paddingX="24"
-      horizontal="center"
-      style={{
-        position: "fixed",
-        top: 0,
-        zIndex: 100,
-        pointerEvents: "none",
-      }}
-    >
-      <Column fillWidth horizontal="center" gap="8">
-        <Row
-          vertical="center"
-          gap="0"
-          style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
-        >
-          {/* Main Nav Capsule */}
-          <Flex
+    <>
+      <Flex
+        as="header"
+        fillWidth
+        paddingTop="16"
+        paddingX="24"
+        horizontal="center"
+        style={{
+          position: "fixed",
+          top: 0,
+          zIndex: 100,
+          pointerEvents: "none",
+        }}
+      >
+        <Column fillWidth horizontal="center" gap="8" style={{ pointerEvents: 'auto' }}>
+          <Row
             vertical="center"
-            paddingX="12"
-            radius="full"
-            style={{
-              background: theme === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(20, 20, 20, 0.6)",
-              backdropFilter: "blur(12px)",
-              height: "48px",
-              width: "fit-content",
-              minWidth: "auto",
-              border: "1px solid var(--neutral-alpha-weak)",
-              boxShadow: "var(--shadow-elevation-dark-two)",
-              position: "relative",
-              zIndex: 2,
-              maxWidth: "100%",
-              overflow: "visible", // Allowed popovers to show
-              transition: "background 0.3s ease",
-            }}
+            gap="0"
+            style={{ position: "relative", maxWidth: "100%" }}
           >
-            <Row vertical="center" fillWidth horizontal="between" gap="12">
-              <Row vertical="center" gap="12">
-                <Link
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  onMouseEnter={() => setIsHomeHovered(true)}
-                  onMouseLeave={() => setIsHomeHovered(false)}
-                >
-                  <motion.div
-                    layout
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    style={{
-                      height: "32px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "var(--brand-alpha-weak)",
-                      border: "1px solid var(--brand-alpha-medium)",
-                      borderRadius: "9999px",
-                      padding: "0 12px",
-                      overflow: "hidden",
-                      minWidth: "32px",
-                      cursor: "pointer",
-                    }}
+            {/* Main Nav Capsule */}
+            <Flex
+              vertical="center"
+              paddingX="12"
+              radius="full"
+              style={{
+                background: theme === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(20, 20, 20, 0.6)",
+                backdropFilter: "blur(12px)",
+                height: "48px",
+                width: "fit-content",
+                minWidth: "auto",
+                border: "1px solid var(--neutral-alpha-weak)",
+                boxShadow: "var(--shadow-elevation-dark-two)",
+                position: "relative",
+                zIndex: 2,
+                maxWidth: "100%",
+                overflow: "visible",
+                transition: "background 0.3s ease",
+              }}
+            >
+              <Row vertical="center" fillWidth horizontal="between" gap="12">
+                <Row vertical="center" gap="12">
+                  <Link
+                    href="/"
+                    style={{ textDecoration: "none" }}
+                    onMouseEnter={() => setIsHomeHovered(true)}
+                    onMouseLeave={() => setIsHomeHovered(false)}
                   >
-                    <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
-                    <AnimatePresence>
-                      {isHomeHovered && (
-                        <motion.span
-                          initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                          animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
-                          exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: 900,
-                            textTransform: "uppercase",
-                            whiteSpace: "nowrap",
-                            color: "var(--brand-on-background-strong)",
-                            overflow: "hidden",
-                          }}
+                    <motion.div
+                      layout
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      style={{
+                        height: "32px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "var(--brand-alpha-weak)",
+                        border: "1px solid var(--brand-alpha-medium)",
+                        borderRadius: "9999px",
+                        padding: "0 12px",
+                        overflow: "hidden",
+                        minWidth: "32px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
+                      <AnimatePresence>
+                        {isHomeHovered && (
+                          <motion.span
+                            initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                            animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
+                            exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            style={{
+                              fontSize: "10px",
+                              fontWeight: 900,
+                              textTransform: "uppercase",
+                              whiteSpace: "nowrap",
+                              color: "var(--brand-on-background-strong)",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {language === "tr" ? "Anasayfa" : "Home"}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  </Link>
+
+                  <div className="hide-mobile">
+                    <Row gap="8" vertical="center">
+                      {menuItems.map((item) => (
+                        <Button 
+                          key={item.href} 
+                          href={item.href} 
+                          variant="tertiary" 
+                          size="s"
+                          target="_self"
                         >
-                          {language === "tr" ? "Anasayfa" : "Home"}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                </Link>
+                          {item.label}
+                        </Button>
+                      ))}
+                    </Row>
+                  </div>
+
+                  <div className="hide-desktop">
+                    <NavIcon
+                      isActive={isMobileMenuOpen}
+                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    />
+                  </div>
+                </Row>
 
                 <div className="hide-mobile">
-                  <Row gap="8" vertical="center">
-                    {menuItems.map((item) => (
-                      <Button 
-                        key={item.href} 
-                        href={item.href} 
-                        variant="tertiary" 
-                        size="s"
-                        target="_self"
+                  <Row vertical="center" gap="12">
+                    {/* Now Playing Pulse */}
+                    {track && (
+                      <div 
+                        style={{ position: 'relative', height: '48px', display: 'flex', alignItems: 'center' }} 
+                        onMouseEnter={() => setIsNowPlayingOpen(true)}
+                        onMouseLeave={() => setIsNowPlayingOpen(false)}
                       >
-                        {item.label}
-                      </Button>
-                    ))}
-                  </Row>
-                </div>
+                        <Pulse variant="success" size="s" style={{ cursor: 'pointer' }} />
+                        <AnimatePresence>
+                          {isNowPlayingOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              style={{
+                                position: 'absolute',
+                                top: '100%',
+                                right: -40,
+                                zIndex: 10,
+                                paddingTop: '12px',
+                                pointerEvents: 'auto'
+                              }}
+                            >
+                              <Flex
+                                padding="12"
+                                radius="l"
+                                background="surface"
+                                border="neutral-alpha-weak"
+                                style={{ boxShadow: "var(--shadow-elevation-dark-three)", minWidth: "240px" }}
+                                vertical="center"
+                                gap="12"
+                              >
+                                <Flex
+                                  radius="xs"
+                                  style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    overflow: "hidden",
+                                    border: "1px solid var(--neutral-alpha-weak)",
+                                  }}
+                                >
+                                  <img
+                                    src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
+                                    alt="Album Art"
+                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                  />
+                                </Flex>
+                                <Column gap="2" style={{ overflow: 'hidden' }}>
+                                  <Text variant="label-strong-s" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    {track.name}
+                                  </Text>
+                                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                                    {track.artist["#text"]}
+                                  </Text>
+                                </Column>
+                              </Flex>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )}
 
-                <div className="hide-desktop">
-                  <NavIcon
-                    isActive={isMobileMenuOpen}
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  />
-                </div>
-              </Row>
-
-              <div className="hide-mobile">
-                <Row vertical="center" gap="12">
-                  {/* Now Playing Pulse Wrapper */}
-                  {track && (
+                    {/* Settings Wrapper */}
                     <div 
                       style={{ position: 'relative', height: '48px', display: 'flex', alignItems: 'center' }} 
-                      onMouseEnter={() => setIsNowPlayingOpen(true)}
-                      onMouseLeave={() => setIsNowPlayingOpen(false)}
+                      onMouseEnter={() => setIsSettingsOpen(true)}
+                      onMouseLeave={() => setIsSettingsOpen(false)}
                     >
-                      <Pulse variant="success" size="s" style={{ cursor: 'pointer' }} />
+                      <IconButton
+                        id="settings-toggle"
+                        size="s"
+                        variant="tertiary"
+                        icon="settings"
+                      />
                       <AnimatePresence>
-                        {isNowPlayingOpen && (
+                        {isSettingsOpen && (
                           <motion.div
                             initial={{ opacity: 0, y: 10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
                             style={{
                               position: 'absolute',
                               top: '100%',
-                              right: -40,
+                              right: 0,
                               zIndex: 10,
                               paddingTop: '12px',
                               pointerEvents: 'auto'
                             }}
                           >
-                            <Flex
-                              padding="12"
-                              radius="l"
-                              background="surface"
-                              border="neutral-alpha-weak"
-                              style={{ boxShadow: "var(--shadow-elevation-dark-three)", minWidth: "240px" }}
-                              vertical="center"
-                              gap="12"
-                            >
-                              <Flex
-                                radius="xs"
-                                style={{
-                                  width: "40px",
-                                  height: "40px",
-                                  overflow: "hidden",
-                                  border: "1px solid var(--neutral-alpha-weak)",
-                                }}
-                              >
-                                <img
-                                  src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
-                                  alt="Album Art"
-                                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                />
-                              </Flex>
-                              <Column gap="2" style={{ overflow: 'hidden' }}>
-                                <Text variant="label-strong-s" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                  {track.name}
-                                </Text>
-                                <Text variant="body-default-xs" onBackground="neutral-weak">
-                                  {track.artist["#text"]}
-                                </Text>
-                              </Column>
-                            </Flex>
+                            <ThemeSwitcher />
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
-                  )}
+                  </Row>
+                </div>
+              </Row>
+            </Flex>
+          </Row>
 
-                  {/* Settings Wrapper */}
-                  <div 
-                    style={{ position: 'relative', height: '48px', display: 'flex', alignItems: 'center' }} 
-                    onMouseEnter={() => setIsSettingsOpen(true)}
-                    onMouseLeave={() => setIsSettingsOpen(false)}
-                  >
+          {/* Mobile Menu Content */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                style={{ width: '100%', maxWidth: '320px', pointerEvents: 'auto' }}
+              >
+                <Column 
+                  padding="16" 
+                  background="surface" 
+                  border="neutral-alpha-weak"
+                  radius="l" 
+                  fillWidth
+                  gap="8"
+                  style={{ backdropFilter: 'blur(12px)', boxShadow: 'var(--shadow-elevation-dark-two)' }}
+                >
+                  <Button fillWidth horizontal="start" size="l" variant="tertiary" href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                    Home
+                  </Button>
+                  {menuItems.map((item) => (
+                    <Button 
+                      key={item.href}
+                      fillWidth 
+                      horizontal="start" 
+                      size="l" 
+                      variant="tertiary" 
+                      href={item.href} 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+                  
+                  <Line background="neutral-alpha-weak" marginY="8" />
+                  
+                  <Flex paddingX="8" vertical="center" horizontal="between">
+                    <Text variant="label-strong-s" onBackground="neutral-weak">Theme</Text>
                     <IconButton
-                      id="settings-toggle"
                       size="s"
                       variant="tertiary"
-                      icon="settings"
+                      icon={theme === "dark" ? "sun" : "moon"}
+                      onClick={toggleTheme}
                     />
-                    <AnimatePresence>
-                      {isSettingsOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
-                          style={{
-                            position: 'absolute',
-                            top: '100%',
-                            right: 0,
-                            zIndex: 10,
-                            paddingTop: '12px',
-                            pointerEvents: 'auto'
-                          }}
-                        >
-                          <ThemeSwitcher />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </Row>
-              </div>
-            </Row>
-          </Flex>
-        </Row>
+                  </Flex>
+                </Column>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Column>
+      </Flex>
 
-        {/* Mobile Menu Content */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              style={{ width: '100%', maxWidth: '320px', pointerEvents: 'auto' }}
+      {/* Floating Corner Now Playing Pill */}
+      <AnimatePresence>
+        {track && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            style={{
+              position: 'fixed',
+              bottom: '24px',
+              right: '24px',
+              zIndex: 50,
+              pointerEvents: 'auto'
+            }}
+            onMouseEnter={() => setIsFloatingNowPlayingHovered(true)}
+            onMouseLeave={() => setIsFloatingNowPlayingHovered(false)}
+          >
+            <Flex
+              padding="8"
+              radius="full"
+              background="surface"
+              border="neutral-alpha-weak"
+              vertical="center"
+              gap="12"
+              style={{
+                boxShadow: "var(--shadow-elevation-dark-two)",
+                backdropFilter: 'blur(12px)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                maxWidth: isFloatingNowPlayingHovered ? '300px' : '48px',
+                height: '48px',
+                overflow: 'hidden'
+              }}
             >
-              <Column 
-                padding="16" 
-                background="surface" 
-                border="neutral-alpha-weak"
-                radius="l" 
-                fillWidth
-                gap="8"
-                style={{ backdropFilter: 'blur(12px)', boxShadow: 'var(--shadow-elevation-dark-two)' }}
+              <Flex
+                radius="full"
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  overflow: "hidden",
+                  flexShrink: 0
+                }}
               >
-                <Button fillWidth horizontal="start" size="l" variant="tertiary" href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  Home
-                </Button>
-                {menuItems.map((item) => (
-                  <Button 
-                    key={item.href}
-                    fillWidth 
-                    horizontal="start" 
-                    size="l" 
-                    variant="tertiary" 
-                    href={item.href} 
-                    onClick={() => setIsMobileMenuOpen(false)}
+                <img
+                  src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
+                  alt="Album Art"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Flex>
+              
+              <AnimatePresence>
+                {isFloatingNowPlayingHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: 'auto' }}
+                    exit={{ opacity: 0, width: 0 }}
+                    style={{ overflow: 'hidden' }}
                   >
-                    {item.label}
-                  </Button>
-                ))}
-                
-                <Line background="neutral-alpha-weak" marginY="8" />
-                
-                <Flex paddingX="8" vertical="center" horizontal="between">
-                  <Text variant="label-strong-s" onBackground="neutral-weak">Theme</Text>
-                  <IconButton
-                    size="s"
-                    variant="tertiary"
-                    icon={theme === "dark" ? "sun" : "moon"}
-                    onClick={toggleTheme}
-                  />
-                </Flex>
-              </Column>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Column>
-    </Flex>
+                    <Column gap="2" style={{ minWidth: '160px' }}>
+                      <Text variant="label-strong-s" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {track.name}
+                      </Text>
+                      <Text variant="body-default-xs" onBackground="neutral-weak">
+                        {track.artist["#text"]}
+                      </Text>
+                    </Column>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              
+              {!isFloatingNowPlayingHovered && (
+                <Pulse variant="success" size="s" style={{ position: 'absolute', right: '8px', top: '8px' }} />
+              )}
+            </Flex>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

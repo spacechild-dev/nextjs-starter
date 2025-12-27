@@ -18,7 +18,7 @@ import {
   NavIcon,
 } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
-import { Code, Disc, Mic2, Music2 } from "lucide-react";
+import { Code, Disc, Mic2, Music2, Briefcase, Martini } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,6 +34,13 @@ export const Header = () => {
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const { track } = useNowPlaying();
   const [infoIndex, setInfoIndex] = useState(0);
+  const [isDaiquiri, setIsDaiquiri] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsDaiquiri(window.location.hostname.includes("daiquiri"));
+    }
+  }, []);
 
   // Now Playing info loop
   useEffect(() => {
@@ -251,6 +258,27 @@ export const Header = () => {
               <Row vertical="center" gap="8">
                 {/* Integrated Switcher Group */}
                 <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
+                  <ToggleButton
+                    id="persona-main"
+                    size="s"
+                    selected={!isDaiquiri}
+                    onClick={() => {
+                      if (isDaiquiri) window.location.href = "https://dagkanbayramoglu.com";
+                    }}
+                  >
+                    <Briefcase size={14} />
+                  </ToggleButton>
+                  <ToggleButton
+                    id="persona-daiquiri"
+                    size="s"
+                    selected={isDaiquiri}
+                    onClick={() => {
+                      if (!isDaiquiri) window.location.href = "https://daiquiri.dev";
+                    }}
+                  >
+                    <Martini size={14} />
+                  </ToggleButton>
+                  <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
                   <ToggleButton
                     id="lang-en"
                     size="s"

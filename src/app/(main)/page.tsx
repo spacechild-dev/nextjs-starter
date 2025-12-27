@@ -64,10 +64,16 @@ export default function Home() {
                 ease: "linear",
                 delay: Math.random() * 5,
               }}
-              style={{ position: "absolute", fontSize: "16px", left: "50%" }}
-            >
-              🎴
-            </motion.div>
+              style={{
+                position: "absolute",
+                left: "50%",
+                width: "4px",
+                height: "4px",
+                borderRadius: "50%",
+                backgroundColor: "var(--neutral-on-background-weak)",
+                boxShadow: "0 0 4px var(--neutral-on-background-weak)",
+              }}
+            />
           ))}
         </div>
 

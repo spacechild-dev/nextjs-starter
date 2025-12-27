@@ -13,7 +13,7 @@ import {
   NavIcon,
 } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
-import { Code, Disc, Mic2, Music2 } from "lucide-react";
+import { Code } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +27,6 @@ export const Header = () => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const { track } = useNowPlaying();
-  const [infoIndex, setInfoIndex] = useState(0);
   const [isDaiquiri, setIsDaiquiri] = useState(false);
 
   useEffect(() => {
@@ -35,16 +34,6 @@ export const Header = () => {
       setIsDaiquiri(window.location.hostname.includes("daiquiri"));
     }
   }, []);
-
-  // Now Playing info loop
-  useEffect(() => {
-    if (track) {
-      const interval = setInterval(() => {
-        setInfoIndex((prev) => (prev + 1) % 2);
-      }, 6000);
-      return () => clearInterval(interval);
-    }
-  }, [track]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("data-theme") as "light" | "dark";
@@ -63,13 +52,6 @@ export const Header = () => {
     localStorage.setItem("data-theme", newTheme);
     analytics.trackThemeChange(newTheme);
   };
-
-  const trackInfo = track
-    ? [
-        { icon: <Music2 size={14} />, label: track.name },
-        { icon: <Mic2 size={14} />, label: track.artist["#text"] },
-      ]
-    : [];
 
   return (
     <Flex
@@ -282,34 +264,18 @@ export const Header = () => {
                     />
                   </Flex>
 
-                  <div style={{ height: "20px", overflow: "hidden", position: "relative", width: "160px" }}>
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={infoIndex}
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -20, opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Flex vertical="center" gap="8">
-                          <Text style={{ color: "var(--neutral-on-background-weak)" }}>
-                            {trackInfo[infoIndex]?.icon}
-                          </Text>
-                          <Text
-                            variant="label-strong-s"
-                            style={{ 
-                              color: "var(--neutral-on-background-strong)",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              maxWidth: "130px"
-                            }}
-                          >
-                            {trackInfo[infoIndex]?.label}
-                          </Text>
-                        </Flex>
-                      </motion.div>
-                    </AnimatePresence>
+                  <div style={{ height: "20px", display: "flex", alignItems: "center", width: "240px", overflow: "hidden" }}>
+                    <Text
+                      variant="label-strong-s"
+                      style={{ 
+                        color: "var(--neutral-on-background-strong)",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}
+                    >
+                      {track.name} — {track.artist["#text"]}
+                    </Text>
                   </div>
 
                   <Flex

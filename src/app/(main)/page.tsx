@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Text, Button, Column, Flex, Row, Icon } from "@once-ui-system/core";
+import { Heading, Text, Button, Column, Flex, Row, Icon, WeatherFx } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
 import { FaGithub, FaLinkedin, FaEnvelope, FaSpotify, FaLastfm } from "react-icons/fa";
 import { SiDiscogs } from "react-icons/si";
@@ -11,7 +11,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import CTALink from "@/components/CTALink";
 import ContactForm from "@/components/ContactForm";
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -43,39 +42,12 @@ export default function Home() {
         paddingX="l"
         style={{ minHeight: "95vh", position: "relative", overflow: "hidden" }}
       >
-        {/* Card Rain Effect */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            zIndex: 0,
-            opacity: 0.3,
-          }}
-        >
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ y: -20, x: Math.random() * 1000 - 500 }}
-              animate={{ y: 800 }}
-              transition={{
-                duration: 5 + Math.random() * 5,
-                repeat: Infinity,
-                ease: "linear",
-                delay: Math.random() * 5,
-              }}
-              style={{
-                position: "absolute",
-                left: "50%",
-                width: "4px",
-                height: "4px",
-                borderRadius: "50%",
-                backgroundColor: "var(--neutral-on-background-weak)",
-                boxShadow: "0 0 4px var(--neutral-on-background-weak)",
-              }}
-            />
-          ))}
-        </div>
+        <WeatherFx
+          type="snow"
+          colors={["neutral-solid-weak"]}
+          intensity={60}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, opacity: 0.4 }}
+        />
 
         <Column maxWidth="m" horizontal="center" gap="48" align="center" style={{ zIndex: 1 }}>
           <Column gap="32" horizontal="center">
@@ -108,31 +80,31 @@ export default function Home() {
           <NowPlaying />
 
           <Flex gap="12" wrap horizontal="center">
-            <CTALink href={social.github} variant="secondary" size="s">
+            <CTALink href={social.github} variant="secondary" size="s" weight="default">
               <Flex gap="8" vertical="center">
                 <FaGithub /> GitHub
               </Flex>
             </CTALink>
 
-            <CTALink href={social.linkedin} variant="secondary" size="s">
+            <CTALink href={social.linkedin} variant="secondary" size="s" weight="default">
               <Flex gap="8" vertical="center">
                 <FaLinkedin /> LinkedIn
               </Flex>
             </CTALink>
 
-            <CTALink href={social.spotify} variant="secondary" size="s">
+            <CTALink href={social.spotify} variant="secondary" size="s" weight="default">
               <Flex gap="8" vertical="center">
                 <FaSpotify /> Spotify
               </Flex>
             </CTALink>
 
-            <CTALink href={social.lastfm} variant="secondary" size="s">
+            <CTALink href={social.lastfm} variant="secondary" size="s" weight="default">
               <Flex gap="8" vertical="center">
                 <FaLastfm /> Last.fm
               </Flex>
             </CTALink>
 
-            <CTALink href={social.discogs} variant="secondary" size="s">
+            <CTALink href={social.discogs} variant="secondary" size="s" weight="default">
               <Flex gap="8" vertical="center">
                 <SiDiscogs /> Discogs
               </Flex>
@@ -140,6 +112,7 @@ export default function Home() {
 
             <Button
               size="s"
+              weight="default"
               variant="primary"
               onClick={() => setIsContactOpen(true)}
             >

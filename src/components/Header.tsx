@@ -11,6 +11,8 @@ import {
   ToggleButton,
   Line,
   NavIcon,
+  Pulse,
+  Column,
 } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
 import { Code } from "lucide-react";
@@ -30,16 +32,13 @@ export const Header = () => {
   const { track } = useNowPlaying();
   const [isDaiquiri, setIsDaiquiri] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isNowPlayingOpen, setIsNowPlayingOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
-        setIsSettingsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (typeof window !== "undefined") {
+      setIsDaiquiri(window.location.hostname.includes("daiquiri"));
+    }
   }, []);
 
   useEffect(() => {
@@ -60,6 +59,18 @@ export const Header = () => {
     analytics.trackThemeChange(newTheme);
   };
 
+  const menuItems = [
+    { label: t("nav.blog"), href: "/blog" },
+    { 
+      label: t("nav.projects"), 
+      href: isDaiquiri ? "/projects" : "https://daiquiri.dev/projects" 
+    },
+    { 
+      label: t("nav.career"), 
+      href: !isDaiquiri ? "/resume" : "https://dagkanbayramoglu.com/resume" 
+    },
+  ];
+
   return (
     <Flex
       as="header"
@@ -74,7 +85,7 @@ export const Header = () => {
         pointerEvents: "none",
       }}
     >
-      <Flex direction="column" horizontal="center" gap="8" style={{ width: '100%' }}>
+      <Column fillWidth horizontal="center" gap="8">
         <Row
           vertical="center"
           gap="0"
@@ -151,25 +162,17 @@ export const Header = () => {
 
                 <div className="hide-mobile">
                   <Row gap="8" vertical="center">
-                    <Button href="/blog" variant="tertiary" size="s">
-                      {t("nav.blog")}
-                    </Button>
-                    <Button 
-                      href={(isDaiquiri || process.env.NODE_ENV === 'development') ? "/projects" : "https://daiquiri.dev/projects"} 
-                      variant="tertiary" 
-                      size="s"
-                      target="_self"
-                    >
-                      {t("nav.projects")}
-                    </Button>
-                    <Button 
-                      href={(!isDaiquiri || process.env.NODE_ENV === 'development') ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
-                      variant="tertiary" 
-                      size="s"
-                      target="_self"
-                    >
-                      {t("nav.career")}
-                    </Button>
+                    {menuItems.map((item) => (
+                      <Button 
+                        key={item.href} 
+                        href={item.href} 
+                        variant="tertiary" 
+                        size="s"
+                        target="_self"
+                      >
+                        {item.label}
+                      </Button>
+                    ))}
                   </Row>
                 </div>
 
@@ -182,14 +185,80 @@ export const Header = () => {
               </Row>
 
               <div className="hide-mobile">
-                <Row vertical="center" gap="8">
-                  <div style={{ position: 'relative' }} ref={settingsRef}>
+                <Row vertical="center" gap="12">
+                  {/* Now Playing Pulse */}
+                  {track && (
+                    <div 
+                      style={{ position: 'relative' }} 
+                      onMouseEnter={() => setIsNowPlayingOpen(true)}
+                      onMouseLeave={() => setIsNowPlayingOpen(false)}
+                    >
+                      <Flex vertical="center" gap="8" style={{ cursor: 'pointer' }}>
+                        <Pulse variant="success" size="s" />
+                      </Flex>
+                      <AnimatePresence>
+                        {isNowPlayingOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            style={{
+                              position: 'absolute',
+                              top: 'calc(100% + 12px)',
+                              right: -40,
+                              zIndex: 10,
+                              pointerEvents: 'auto'
+                            }}
+                          >
+                            <Flex
+                              padding="12"
+                              radius="l"
+                              background="surface"
+                              border="neutral-alpha-weak"
+                              style={{ boxShadow: "var(--shadow-elevation-dark-three)", minWidth: "240px" }}
+                              vertical="center"
+                              gap="12"
+                            >
+                              <Flex
+                                radius="xs"
+                                style={{
+                                  width: "40px",
+                                  height: "40px",
+                                  overflow: "hidden",
+                                  border: "1px solid var(--neutral-alpha-weak)",
+                                }}
+                              >
+                                <img
+                                  src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
+                                  alt="Album Art"
+                                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                />
+                              </Flex>
+                              <Column gap="2" style={{ overflow: 'hidden' }}>
+                                <Text variant="label-strong-s" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                  {track.name}
+                                </Text>
+                                <Text variant="body-default-xs" onBackground="neutral-weak">
+                                  {track.artist["#text"]}
+                                </Text>
+                              </Column>
+                            </Flex>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+
+                  <div 
+                    style={{ position: 'relative' }} 
+                    onMouseEnter={() => setIsSettingsOpen(true)}
+                    onMouseLeave={() => setIsSettingsOpen(false)}
+                  >
                     <IconButton
                       id="settings-toggle"
                       size="s"
                       variant="tertiary"
                       icon="settings"
-                      onClick={() => setIsSettingsOpen(!isSettingsOpen)}
                     />
                     <AnimatePresence>
                       {isSettingsOpen && (
@@ -217,89 +286,57 @@ export const Header = () => {
           </Flex>
         </Row>
 
-        {/* Now Playing Layer */}
+        {/* Mobile Menu Content */}
         <AnimatePresence>
-          {track && (
+          {isMobileMenuOpen && (
             <motion.div
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -10, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-              className="hide-mobile"
-              style={{
-                pointerEvents: "auto",
-                paddingLeft: "12px",
-                paddingRight: "16px",
-                background: theme === "light" ? "rgba(240, 240, 240, 0.9)" : "var(--neutral-background-medium)",
-                backdropFilter: "blur(16px)",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: "20px",
-                border: "1px solid var(--neutral-alpha-weak)",
-                boxShadow: "var(--shadow-elevation-dark-one)",
-                zIndex: 1,
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                transition: "background 0.3s ease",
-              }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              style={{ width: '100%', maxWidth: '320px', pointerEvents: 'auto' }}
             >
-              <a
-                href="https://www.last.fm/user/dagkan"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
+              <Column 
+                padding="16" 
+                background="surface" 
+                border="neutral-alpha-weak"
+                radius="l" 
+                fillWidth
+                gap="8"
+                style={{ backdropFilter: 'blur(12px)', boxShadow: 'var(--shadow-elevation-dark-two)' }}
               >
-                <Flex vertical="center" gap="12">
-                  <Flex
-                    radius="xs"
-                    style={{
-                      width: "24px",
-                      height: "24px",
-                      overflow: "hidden",
-                      border: "1px solid var(--neutral-alpha-weak)",
-                    }}
+                <Button fillWidth horizontal="start" size="l" variant="tertiary" href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                  Home
+                </Button>
+                {menuItems.map((item) => (
+                  <Button 
+                    key={item.href}
+                    fillWidth 
+                    horizontal="start" 
+                    size="l" 
+                    variant="tertiary" 
+                    href={item.href} 
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <img
-                      src={track.image.find((img) => img.size === "small")?.["#text"] || track.image[0]["#text"]}
-                      alt="Album Art"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </Flex>
-
-                  <div style={{ height: "20px", display: "flex", alignItems: "center", width: "240px", overflow: "hidden" }}>
-                    <Text
-                      variant="label-strong-s"
-                      style={{ 
-                        color: "var(--neutral-on-background-strong)",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis"
-                      }}
-                    >
-                      {track.name} — {track.artist["#text"]}
-                    </Text>
-                  </div>
-
-                  <Flex
-                    paddingX="8"
-                    paddingY="2"
-                    radius="xs"
-                    style={{
-                      background: "rgba(213, 16, 7, 0.1)",
-                      border: "1px solid rgba(213, 16, 7, 0.2)",
-                    }}
-                  >
-                    <Text variant="code-default-xs" style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}>
-                      NOW PLAYING
-                    </Text>
-                  </Flex>
+                    {item.label}
+                  </Button>
+                ))}
+                
+                <Line background="neutral-alpha-weak" marginY="8" />
+                
+                <Flex paddingX="8" vertical="center" horizontal="between">
+                  <Text variant="label-strong-s" onBackground="neutral-weak">Theme</Text>
+                  <IconButton
+                    size="s"
+                    variant="tertiary"
+                    icon={theme === "dark" ? "sun" : "moon"}
+                    onClick={toggleTheme}
+                  />
                 </Flex>
-              </a>
+              </Column>
             </motion.div>
           )}
         </AnimatePresence>
-      </Flex>
+      </Column>
     </Flex>
   );
 };

@@ -7,11 +7,12 @@ interface CTALinkProps {
   href: string;
   variant?: "primary" | "secondary" | "tertiary" | "danger";
   size?: "s" | "m" | "l";
+  weight?: "default" | "strong";
   children: React.ReactNode;
   projectTitle?: string;
 }
 
-export default function CTALink({ href, variant, size, children, projectTitle }: CTALinkProps) {
+export default function CTALink({ href, variant, size, weight, children, projectTitle }: CTALinkProps) {
   const handleClick = () => {
     if (projectTitle) {
       analytics.trackProjectCTAClick(projectTitle, children?.toString() || "", href);
@@ -21,7 +22,7 @@ export default function CTALink({ href, variant, size, children, projectTitle }:
   };
 
   return (
-    <Button href={href} variant={variant} size={size} onClick={handleClick}>
+    <Button href={href} variant={variant} size={size} weight={weight} onClick={handleClick}>
       {children}
     </Button>
   );

@@ -1,44 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Flex, Text, Heading, Row, Icon } from "@once-ui-system/core";
 import { SiLastdotfm } from "react-icons/si";
 import { motion } from "framer-motion";
-
-interface Track {
-  name: string;
-  artist: { "#text": string };
-  image: { "#text": string }[];
-  "@attr"?: { nowplaying: string };
-}
+import { useNowPlaying } from "@/hooks/useNowPlaying";
 
 export const NowPlaying = () => {
-  const [track, setTrack] = useState<Track | null>(null);
-  const apiKey = "b196b523ff00d1b3803ae66c3d5d2da5";
-  const user = "dagkan";
+  const { track } = useNowPlaying();
   const profileUrl = "https://www.last.fm/user/dagkan";
-
-  const fetchNowPlaying = () => {
-    const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${apiKey}&format=json&limit=1`;
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!data.recenttracks) return;
-        const latestTrack = data.recenttracks.track[0];
-        if (latestTrack && latestTrack["@attr"] && latestTrack["@attr"].nowplaying) {
-          setTrack(latestTrack);
-        } else {
-          setTrack(null);
-        }
-      })
-      .catch(() => setTrack(null));
-  };
-
-  useEffect(() => {
-    fetchNowPlaying();
-    const interval = setInterval(fetchNowPlaying, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   if (!track) return null;
 

@@ -23,6 +23,8 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import * as analytics from "@/lib/analytics";
+import { useNowPlaying } from "@/hooks/useNowPlaying";
+import { SiLastdotfm } from "react-icons/si";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -30,6 +32,7 @@ export const Header = () => {
   const { language, setLanguage, t } = useLanguage();
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isHomeHovered, setIsHomeHovered] = useState(false);
+  const { track } = useNowPlaying();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("data-theme") as "light" | "dark";
@@ -283,6 +286,47 @@ export const Header = () => {
             </div>
           </Row>
         </Flex>
+
+        {/* Now Playing Layer - Slides out from behind */}
+        <AnimatePresence>
+          {track && (
+            <motion.div
+              initial={{ x: -20, opacity: 0, width: 0 }}
+              animate={{ x: 0, opacity: 1, width: "auto" }}
+              exit={{ x: -20, opacity: 0, width: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 30 }}
+              className="hide-mobile"
+              style={{
+                marginLeft: "-24px",
+                paddingLeft: "36px",
+                paddingRight: "20px",
+                background: "var(--neutral-background-weak)",
+                backdropFilter: "blur(16px)",
+                height: "48px",
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid var(--neutral-alpha-weak)",
+                borderLeft: "none",
+                borderTopRightRadius: "24px",
+                borderBottomRightRadius: "24px",
+                boxShadow: "var(--shadow-elevation-dark-two)",
+                zIndex: 1,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <Flex vertical="center" gap="12">
+                <SiLastdotfm style={{ color: "#d51007" }} size={14} />
+                <Text variant="code-default-xs" style={{ color: "#d51007", fontWeight: "bold" }}>
+                  {track.name}
+                </Text>
+                <Text variant="body-default-xs" onBackground="neutral-weak">
+                  {track.artist["#text"]}
+                </Text>
+              </Flex>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Row>
 
       {/* Mobile Mega Menu */}

@@ -144,7 +144,7 @@ export const NowPlaying = () => {
         >
           <Flex
             paddingX="12"
-            paddingY="6"
+            paddingY="8"
             radius="m"
             style={{
               background: "rgba(213, 16, 7, 0.1)",

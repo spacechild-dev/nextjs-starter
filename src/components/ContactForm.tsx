@@ -122,6 +122,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
           <Flex direction="column" gap="16">
             <Flex gap="16" wrap>
               <Input
+                id="name"
                 label="Full Name"
                 name="name"
                 value={formData.name}
@@ -130,6 +131,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 style={{ width: "100%" }}
               />
               <Input
+                id="email"
                 label="Email Address"
                 name="email"
                 type="email"
@@ -141,6 +143,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
             </Flex>
             <Flex gap="16" wrap>
               <Input
+                id="company"
                 label="Company (Optional)"
                 name="company"
                 value={formData.company}
@@ -148,6 +151,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 style={{ width: "100%" }}
               />
               <Input
+                id="position"
                 label="Position (Optional)"
                 name="position"
                 value={formData.position}
@@ -156,6 +160,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               />
             </Flex>
             <Textarea
+              id="message"
               label="Message"
               name="message"
               value={formData.message}

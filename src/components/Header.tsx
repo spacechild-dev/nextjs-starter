@@ -140,30 +140,6 @@ export const Header = () => {
         gap="0"
         style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
       >
-        {/* BETA Label - Wider and Responsive */}
-        <div className="hide-mobile">
-          <Flex
-            paddingX="32"
-            vertical="center"
-            style={{
-              backgroundColor: "var(--color-beta-bg)",
-              height: "48px",
-              borderTopLeftRadius: "24px",
-              borderBottomLeftRadius: "24px",
-              border: "1px solid var(--brand-alpha-medium)",
-              borderRight: "none",
-              boxShadow: "var(--shadow-elevation-dark-two)",
-              position: "relative",
-              zIndex: 1,
-              marginRight: "-24px",
-              paddingRight: "52px",
-            }}
-          >
-            <Text variant="label-strong-xs" style={{ color: "white", letterSpacing: "0.05em" }}>
-              BETA
-            </Text>
-          </Flex>
-        </div>
         {/* Main Nav Capsule - Theme Aware Background */}
         <Flex
           vertical="center"

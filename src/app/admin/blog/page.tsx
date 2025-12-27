@@ -9,7 +9,7 @@ import {
   Column,
   Row,
   Line,
-  Badge,
+  Tag,
   useToast,
 } from "@once-ui-system/core";
 import { useRouter } from "next/navigation";
@@ -49,7 +49,7 @@ export default function AdminBlogPage() {
                 <Heading variant="heading-strong-m">{post.title}</Heading>
                 <Text variant="body-default-s" onBackground="neutral-weak">{post.date}</Text>
               </Column>
-              <Badge variant={post.status === 'published' ? 'brand' : 'neutral'} size="s">{post.status}</Badge>
+              <Tag variant={post.status === 'published' ? 'brand' : 'neutral'} size="s">{post.status}</Tag>
             </Flex>
           ))}
         </Flex>

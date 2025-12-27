@@ -11,7 +11,7 @@ import {
   Row,
   Line,
   Icon,
-  Badge,
+  Tag,
   Background,
 } from "@once-ui-system/core";
 import { useRouter } from "next/navigation";
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
         <Column gap="8">
           <Row vertical="center" gap="12">
             <Heading variant="display-strong-s">Dashboard</Heading>
-            <Badge variant="brand" size="s">Admin</Badge>
+            <Tag variant="brand" size="s">Admin</Tag>
           </Row>
           <Text variant="body-default-m" onBackground="neutral-weak">
             Hoş geldin, {session?.user?.email}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Text, Button, Column, Badge, Flex, Row, Icon } from "@once-ui-system/core";
+import { Heading, Text, Button, Column, Flex, Row, Icon } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
 import { FaGithub, FaLinkedin, FaEnvelope, FaSpotify, FaLastfm } from "react-icons/fa";
 import { SiDiscogs } from "react-icons/si";

@@ -57,7 +57,7 @@ export default function PreviewPage() {
           <Text variant="label-strong-s">
             {track.name} — {track.artist["#text"]}
           </Text>
-          <Pulse variant="success" size="xs" />
+          <Pulse variant="success" size="s" />
         </Flex>
       </Column>
 
@@ -75,7 +75,7 @@ export default function PreviewPage() {
                 vertical="center"
                 gap="8"
             >
-                <Pulse variant="success" size="xs" />
+                <Pulse variant="success" size="s" />
                 <Text variant="label-strong-xs">Now Playing</Text>
             </Flex>
         </div>

@@ -33,6 +33,17 @@ export const Header = () => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const { track } = useNowPlaying();
+  const [infoIndex, setInfoIndex] = useState(0);
+
+  // Now Playing info loop
+  useEffect(() => {
+    if (track) {
+      const interval = setInterval(() => {
+        setInfoIndex((prev) => (prev + 1) % 3);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [track]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("data-theme") as "light" | "dark";
@@ -102,6 +113,14 @@ export const Header = () => {
     },
   ];
 
+  const trackInfo = track
+    ? [
+        { label: track.name },
+        { label: track.album?.["#text"] || "Album" },
+        { label: track.artist["#text"] },
+      ]
+    : [];
+
   return (
     <Flex
       as="header"
@@ -121,38 +140,38 @@ export const Header = () => {
         gap="0"
         style={{ pointerEvents: "auto", position: "relative", maxWidth: "100%" }}
       >
-                {/* BETA Label - Wider and Responsive */}
-                <div className="hide-mobile">
-                  <Flex
-                    paddingX="32"
-                    vertical="center"
-                    style={{
-                      backgroundColor: "var(--color-beta-bg)",
-                      height: "48px",
-                      borderTopLeftRadius: "24px",
-                      borderBottomLeftRadius: "24px",
-                      border: "1px solid var(--brand-alpha-medium)",
-                      borderRight: "none",
-                      boxShadow: "var(--shadow-elevation-dark-two)",
-                      position: "relative",
-                      zIndex: 1,
-                      marginRight: "-24px",
-                      paddingRight: "52px",
-                    }}
-                  >
-                    <Text variant="label-strong-xs" style={{ color: "white", letterSpacing: "0.05em" }}>
-                      BETA
-                    </Text>
-                  </Flex>
-                </div>
+        {/* BETA Label - Wider and Responsive */}
+        <div className="hide-mobile">
+          <Flex
+            paddingX="32"
+            vertical="center"
+            style={{
+              backgroundColor: "var(--color-beta-bg)",
+              height: "48px",
+              borderTopLeftRadius: "24px",
+              borderBottomLeftRadius: "24px",
+              border: "1px solid var(--brand-alpha-medium)",
+              borderRight: "none",
+              boxShadow: "var(--shadow-elevation-dark-two)",
+              position: "relative",
+              zIndex: 1,
+              marginRight: "-24px",
+              paddingRight: "52px",
+            }}
+          >
+            <Text variant="label-strong-xs" style={{ color: "white", letterSpacing: "0.05em" }}>
+              BETA
+            </Text>
+          </Flex>
+        </div>
         {/* Main Nav Capsule - Theme Aware Background */}
         <Flex
           vertical="center"
           paddingX="12"
           radius="full"
           style={{
-            background: "var(--neutral-background-weak)",
-            backdropFilter: "blur(16px)",
+            background: "rgba(20, 20, 20, 0.6)",
+            backdropFilter: "blur(12px)",
             height: "48px",
             width: "fit-content",
             minWidth: "auto",
@@ -161,9 +180,44 @@ export const Header = () => {
             position: "relative",
             zIndex: 2,
             maxWidth: "100%",
+            overflow: "hidden",
           }}
         >
-          <Row vertical="center" fillWidth horizontal="between" gap="12">
+          {/* Card Rain Effect */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              zIndex: 0,
+              opacity: 0.3,
+            }}
+          >
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ y: -20, x: Math.random() * 200 }}
+                animate={{ y: 60 }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: Math.random() * 2,
+                }}
+                style={{ position: "absolute", fontSize: "12px" }}
+              >
+                🎴
+              </motion.div>
+            ))}
+          </div>
+
+          <Row
+            vertical="center"
+            fillWidth
+            horizontal="between"
+            gap="12"
+            style={{ position: "relative", zIndex: 1 }}
+          >
             <Row vertical="center" gap="12">
               <Link
                 href="/"
@@ -299,8 +353,8 @@ export const Header = () => {
               style={{
                 marginLeft: "-24px",
                 paddingLeft: "36px",
-                paddingRight: "20px",
-                background: "var(--neutral-background-weak)",
+                paddingRight: "16px",
+                background: "var(--neutral-background-medium)",
                 backdropFilter: "blur(16px)",
                 height: "48px",
                 display: "flex",
@@ -316,13 +370,67 @@ export const Header = () => {
               }}
             >
               <Flex vertical="center" gap="12">
-                <SiLastdotfm style={{ color: "#d51007" }} size={14} />
-                <Text variant="code-default-xs" style={{ color: "#d51007", fontWeight: "bold" }}>
-                  {track.name}
-                </Text>
-                <Text variant="body-default-xs" onBackground="neutral-weak">
-                  {track.artist["#text"]}
-                </Text>
+                <Flex
+                  radius="xs"
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    overflow: "hidden",
+                    border: "1px solid var(--neutral-alpha-weak)",
+                  }}
+                >
+                  <img
+                    src={
+                      track.image.find((img) => img.size === "small")?.["#text"] ||
+                      track.image[0]["#text"]
+                    }
+                    alt="Album Art"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </Flex>
+
+                <div
+                  style={{
+                    height: "20px",
+                    overflow: "hidden",
+                    position: "relative",
+                    minWidth: "120px",
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={infoIndex}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Text
+                        variant="label-strong-s"
+                        style={{ color: "var(--neutral-on-background-strong)" }}
+                      >
+                        {trackInfo[infoIndex]?.label}
+                      </Text>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                <Flex
+                  paddingX="8"
+                  paddingY="2"
+                  radius="xs"
+                  style={{
+                    background: "rgba(213, 16, 7, 0.1)",
+                    border: "1px solid rgba(213, 16, 7, 0.2)",
+                  }}
+                >
+                  <Text
+                    variant="code-default-xs"
+                    style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}
+                  >
+                    NOW PLAYING
+                  </Text>
+                </Flex>
               </Flex>
             </motion.div>
           )}

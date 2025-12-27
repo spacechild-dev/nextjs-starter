@@ -3,24 +3,33 @@
 import React from "react";
 import { Heading, Text, Column, Flex, Row, Line, Button } from "@once-ui-system/core";
 import { useLanguage } from "@/context/LanguageContext";
+import { skills } from "@/resources/skills.config";
 
 export default function ResumePage() {
   const { language, t } = useLanguage();
 
-  const calculateDuration = (start: Date, end: Date = new Date()) => {
-    const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-    return months < 1 ? 1 : months;
+  const formatDuration = (start: Date, end: Date = new Date()) => {
+    const totalMonths = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    if (years >= 1) {
+      const yearStr = years === 1 ? (language === "tr" ? "yıl" : "yr") : (language === "tr" ? "yıl" : "yrs");
+      const monthStr = months > 0 ? ` ${months} ${language === "tr" ? "ay" : "mos"}` : "";
+      return `${years} ${yearStr}${monthStr}`;
+    }
+    return `${totalMonths < 1 ? 1 : totalMonths} ${language === "tr" ? "ay" : "mos"}`;
   };
 
-  const optdomStart = new Date(2025, 9); // Oct 2025 (months are 0-indexed)
-  const roipublicStart = new Date(2024, 1); // Feb 2024
-  const roipublicEnd = new Date(2025, 9); // Oct 2025
-  const profajStart = new Date(2022, 1); // Feb 2022 (Başlangıç Şubat)
-  const profajEnd = new Date(2024, 1); // Feb 2024
+  const optdomStart = new Date(2025, 9);
+  const roipublicStart = new Date(2024, 1);
+  const roipublicEnd = new Date(2025, 9);
+  const profajStart = new Date(2022, 1);
+  const profajEnd = new Date(2024, 1);
 
-  const optdomDuration = calculateDuration(optdomStart);
-  const roipublicDuration = calculateDuration(roipublicStart, roipublicEnd);
-  const profajDuration = calculateDuration(profajStart, profajEnd);
+  const optdomDuration = formatDuration(optdomStart);
+  const roipublicDuration = formatDuration(roipublicStart, roipublicEnd);
+  const profajDuration = formatDuration(profajStart, profajEnd);
 
   return (
     <Column
@@ -223,35 +232,42 @@ export default function ResumePage() {
           </Row>
         </Column>
 
-        {/* Skills */}
+        {/* Skills - Hashtag Cloud */}
         <Column gap="16">
           <Heading variant="heading-strong-l">{t("career.skillsTitle")}</Heading>
           <Line background="neutral-alpha-weak" />
-          <Flex gap="12" wrap>
-            {[
-              "Google Ads",
-              "Meta Ads",
-              "TikTok Ads",
-              "LinkedIn Ads",
-              "GA4",
-              "GTM",
-              "Server-Side Tracking",
-              "Looker Studio",
-              "Zapier",
-              "Make",
-              "n8n",
-            ].map((skill) => (
-              <Flex
-                key={skill}
-                paddingX="12"
-                paddingY="8"
-                radius="m"
-                background="surface"
-                border="neutral-alpha-weak"
-              >
-                <Text variant="code-default-xs">{skill}</Text>
-              </Flex>
-            ))}
+          <Flex gap="16" wrap horizontal="center" padding="16">
+            {skills.map((skill) => {
+              // Font size based on level (1 to 10)
+              const fontSize = 12 + (skill.level * 2);
+              const opacity = 0.4 + (skill.level * 0.06);
+              
+              return (
+                <Flex
+                  key={skill.name}
+                  paddingX="12"
+                  paddingY="4"
+                  radius="full"
+                  vertical="center"
+                  style={{
+                    cursor: 'default',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  <Text
+                    variant="code-default-xs"
+                    style={{
+                      fontSize: `${fontSize}px`,
+                      opacity: opacity,
+                      fontWeight: skill.level > 7 ? 'bold' : 'normal',
+                      color: skill.level > 8 ? 'var(--brand-on-background-strong)' : 'var(--neutral-on-background-weak)',
+                    }}
+                  >
+                    #{skill.name.replace(/\s+/g, "").toLowerCase()}
+                  </Text>
+                </Flex>
+              );
+            })}
           </Flex>
         </Column>
       </Column>

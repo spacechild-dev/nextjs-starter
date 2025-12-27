@@ -1,0 +1,16 @@
+export const skills = [
+  { name: "Google Ads", level: 10 },
+  { name: "Meta Ads", level: 9 },
+  { name: "TikTok Ads", level: 8 },
+  { name: "LinkedIn Ads", level: 7 },
+  { name: "GA4", level: 10 },
+  { name: "GTM", level: 10 },
+  { name: "Server-Side Tracking", level: 9 },
+  { name: "Looker Studio", level: 8 },
+  { name: "Zapier", level: 7 },
+  { name: "Make", level: 7 },
+  { name: "n8n", level: 8 },
+  { name: "Python", level: 5 },
+  { name: "Next.js", level: 4 },
+  { name: "Docker", level: 6 },
+];

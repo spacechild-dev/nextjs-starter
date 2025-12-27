@@ -27,9 +27,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@csstools/postcss-global-data": "^3.1.0",
     "@types/node": "20.17.23",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
+    "postcss-custom-media": "^11.0.6",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^10.5.0",
     "typescript": "5.8.2"
   },
   "overrides": {

@@ -47,7 +47,7 @@ export const Header = () => {
     if (track) {
       const interval = setInterval(() => {
         setInfoIndex((prev) => (prev + 1) % 3);
-      }, 3000);
+      }, 6000);
       return () => clearInterval(interval);
     }
   }, [track]);

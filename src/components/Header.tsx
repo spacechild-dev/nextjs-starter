@@ -115,9 +115,8 @@ export const Header = () => {
 
   const trackInfo = track
     ? [
-        { label: track.name },
-        { label: track.album?.["#text"] || "Album" },
-        { label: track.artist["#text"] },
+        { label: `Track: ${track.name}` },
+        { label: `Artist: ${track.artist["#text"]}` },
       ]
     : [];
 
@@ -146,7 +145,7 @@ export const Header = () => {
           paddingX="12"
           radius="full"
           style={{
-            background: "rgba(20, 20, 20, 0.6)",
+            background: theme === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(20, 20, 20, 0.6)",
             backdropFilter: "blur(12px)",
             height: "48px",
             width: "fit-content",
@@ -157,6 +156,7 @@ export const Header = () => {
             zIndex: 2,
             maxWidth: "100%",
             overflow: "hidden",
+            transition: "background 0.3s ease",
           }}
         >
           {/* Card Rain Effect */}
@@ -204,13 +204,8 @@ export const Header = () => {
                 <motion.div
                   layout
                   transition={{
-                    layout: {
-                      type: "spring",
-                      stiffness: 180,
-                      damping: 25,
-                      mass: 1,
-                    },
-                    opacity: { duration: 0.3, ease: "easeInOut" },
+                    duration: 0.3,
+                    ease: "easeInOut",
                   }}
                   style={{
                     height: "32px",
@@ -227,23 +222,23 @@ export const Header = () => {
                   }}
                 >
                   <Code size={16} className="text-brand-strong" style={{ flexShrink: 0 }} />
-                  <AnimatePresence initial={false} mode="wait">
+                  <AnimatePresence>
                     {isHomeHovered && (
                       <motion.span
-                        initial={{ opacity: 0, width: 0, x: -5 }}
-                        animate={{ opacity: 1, width: "auto", x: 0 }}
-                        exit={{ opacity: 0, width: 0, x: -5 }}
+                        initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                        animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
+                        exit={{ opacity: 0, width: 0, marginLeft: 0 }}
                         transition={{
-                          duration: 0.4,
-                          ease: [0.23, 1, 0.32, 1],
+                          duration: 0.3,
+                          ease: "easeInOut",
                         }}
                         style={{
-                          marginLeft: "8px",
                           fontSize: "10px",
                           fontWeight: 900,
                           textTransform: "uppercase",
                           whiteSpace: "nowrap",
                           color: "var(--brand-on-background-strong)",
+                          overflow: "hidden",
                         }}
                       >
                         {language === "tr" ? "Anasayfa" : "Home"}
@@ -332,7 +327,7 @@ export const Header = () => {
                 marginLeft: "-24px",
                 paddingLeft: "36px",
                 paddingRight: "16px",
-                background: "var(--neutral-background-medium)",
+                background: theme === "light" ? "rgba(240, 240, 240, 0.9)" : "var(--neutral-background-medium)",
                 backdropFilter: "blur(16px)",
                 height: "48px",
                 display: "flex",
@@ -345,6 +340,7 @@ export const Header = () => {
                 zIndex: 1,
                 overflow: "hidden",
                 whiteSpace: "nowrap",
+                transition: "background 0.3s ease",
               }}
             >
               <a

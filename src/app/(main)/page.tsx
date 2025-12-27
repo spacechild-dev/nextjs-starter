@@ -103,7 +103,11 @@ export default function Home() {
               </Flex>
             </CTALink>
 
-            <Button variant="secondary" size="m" onClick={() => setIsContactOpen(true)}>
+            <Button
+              size="m"
+              onClick={() => setIsContactOpen(true)}
+              style={{ backgroundColor: "var(--emerald-strong)", color: "white" }}
+            >
               <Flex gap="8" vertical="center">
                 <FaEnvelope /> Get in Touch
               </Flex>

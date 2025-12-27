@@ -32,7 +32,7 @@ export function Providers({ children, domain }: { children: React.ReactNode; dom
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (window.location.hostname.includes("daiquiri")) {
-        setCurrentBrand("yellow");
+        setCurrentBrand("lime");
       } else {
         setCurrentBrand("emerald");
       }

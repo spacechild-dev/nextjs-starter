@@ -31,9 +31,9 @@ export const Header = () => {
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const { track } = useNowPlaying();
   const [isDaiquiri, setIsDaiquiri] = useState(false);
+  
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isNowPlayingOpen, setIsNowPlayingOpen] = useState(false);
-  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -107,7 +107,7 @@ export const Header = () => {
               position: "relative",
               zIndex: 2,
               maxWidth: "100%",
-              overflow: "hidden",
+              overflow: "visible", // Allowed popovers to show
               transition: "background 0.3s ease",
             }}
           >
@@ -186,16 +186,14 @@ export const Header = () => {
 
               <div className="hide-mobile">
                 <Row vertical="center" gap="12">
-                  {/* Now Playing Pulse */}
+                  {/* Now Playing Pulse Wrapper */}
                   {track && (
                     <div 
-                      style={{ position: 'relative' }} 
+                      style={{ position: 'relative', height: '48px', display: 'flex', alignItems: 'center' }} 
                       onMouseEnter={() => setIsNowPlayingOpen(true)}
                       onMouseLeave={() => setIsNowPlayingOpen(false)}
                     >
-                      <Flex vertical="center" gap="8" style={{ cursor: 'pointer' }}>
-                        <Pulse variant="success" size="s" />
-                      </Flex>
+                      <Pulse variant="success" size="s" style={{ cursor: 'pointer' }} />
                       <AnimatePresence>
                         {isNowPlayingOpen && (
                           <motion.div
@@ -204,9 +202,10 @@ export const Header = () => {
                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
                             style={{
                               position: 'absolute',
-                              top: 'calc(100% + 12px)',
+                              top: '100%',
                               right: -40,
                               zIndex: 10,
+                              paddingTop: '12px',
                               pointerEvents: 'auto'
                             }}
                           >
@@ -249,8 +248,9 @@ export const Header = () => {
                     </div>
                   )}
 
+                  {/* Settings Wrapper */}
                   <div 
-                    style={{ position: 'relative' }} 
+                    style={{ position: 'relative', height: '48px', display: 'flex', alignItems: 'center' }} 
                     onMouseEnter={() => setIsSettingsOpen(true)}
                     onMouseLeave={() => setIsSettingsOpen(false)}
                   >
@@ -269,9 +269,10 @@ export const Header = () => {
                           transition={{ duration: 0.2 }}
                           style={{
                             position: 'absolute',
-                            top: 'calc(100% + 12px)',
+                            top: '100%',
                             right: 0,
                             zIndex: 10,
+                            paddingTop: '12px',
                             pointerEvents: 'auto'
                           }}
                         >

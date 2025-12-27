@@ -106,8 +106,8 @@ export default async function RootLayout({
                   })};
                   
                   if (window.location.hostname.includes('daiquiri')) {
-                    config.brand = 'yellow';
-                    config.accent = 'yellow';
+                    config.brand = 'lime';
+                    config.accent = 'lime';
                   } else {
                     config.brand = 'emerald';
                     config.accent = 'emerald';

@@ -62,7 +62,7 @@ export const NowPlaying = () => {
       background="surface"
       border="neutral-alpha-weak"
     >
-      <Flex fillWidth direction={{ xs: "column", s: "row" }} vertical="center" gap="16">
+      <Flex fillWidth direction="row" className="flex-column-mobile" vertical="center" gap="16">
         <Row vertical="center" gap="16" fillWidth style={{ minWidth: 0 }}>
           {/* Album Cover */}
           <Flex
@@ -151,7 +151,7 @@ export const NowPlaying = () => {
             gap="8"
           >
             <SiLastdotfm className="text-brand-strong" size={18} />
-            <Text variant="label-strong-xs" onBackground="brand-strong" show="xs">
+            <Text variant="label-strong-xs" onBackground="brand-strong" className="hide-desktop">
               Listen on Last.fm
             </Text>
           </Flex>

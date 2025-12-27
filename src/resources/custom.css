@@ -27,6 +27,9 @@ div[style*="borderRadius: 9999px"] {
   .hide-mobile {
     display: none !important;
   }
+  .flex-column-mobile {
+    flex-direction: column !important;
+  }
 }
 
 @media (min-width: 640px) {

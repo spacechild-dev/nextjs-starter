@@ -235,14 +235,14 @@ export const Header = () => {
                     {t("nav.blog")}
                   </Button>
                   <Button 
-                    href={isDaiquiri ? "/projects" : "https://daiquiri.dev/projects"} 
+                    href={(isDaiquiri || process.env.NODE_ENV === 'development') ? "/projects" : "https://daiquiri.dev/projects"} 
                     variant="tertiary" 
                     size="s"
                   >
                     {t("nav.projects")}
                   </Button>
                   <Button 
-                    href={!isDaiquiri ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
+                    href={(!isDaiquiri || process.env.NODE_ENV === 'development') ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
                     variant="tertiary" 
                     size="s"
                   >
@@ -271,7 +271,12 @@ export const Header = () => {
                     size="s"
                     selected={!isDaiquiri}
                     onClick={() => {
-                      if (isDaiquiri) window.location.href = "https://dagkanbayramoglu.com";
+                      if (process.env.NODE_ENV === 'development') {
+                        console.log("Switching to Main Persona (Dev Mode)");
+                        // Optional: Simulating domain switch via query param could be added here
+                      } else if (isDaiquiri) {
+                        window.location.href = "https://dagkanbayramoglu.com";
+                      }
                     }}
                   >
                     <Briefcase size={14} />
@@ -281,7 +286,11 @@ export const Header = () => {
                     size="s"
                     selected={isDaiquiri}
                     onClick={() => {
-                      if (!isDaiquiri) window.location.href = "https://daiquiri.dev";
+                      if (process.env.NODE_ENV === 'development') {
+                        console.log("Switching to Daiquiri Persona (Dev Mode)");
+                      } else if (!isDaiquiri) {
+                        window.location.href = "https://daiquiri.dev";
+                      }
                     }}
                   >
                     <Martini size={14} />

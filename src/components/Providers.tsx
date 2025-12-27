@@ -30,9 +30,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (window.location.hostname.includes("daiquiri")) {
-        setCurrentBrand("emerald");
+        setCurrentBrand("amber"); // Closest to Classic Daiquiri (Lime/Yellow)
       } else {
-        setCurrentBrand("amber");
+        setCurrentBrand("emerald"); // Personal site
       }
     }
   }, []);

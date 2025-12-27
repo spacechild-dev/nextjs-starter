@@ -18,6 +18,7 @@ import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { DynamicAnalytics } from "@/components/DynamicAnalytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { headers } from "next/headers";
@@ -65,6 +66,7 @@ export default async function RootLayout({
       />
       <head>
         <DynamicAnalytics />
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

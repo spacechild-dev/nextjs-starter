@@ -30,7 +30,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (window.location.hostname.includes("daiquiri")) {
-        setCurrentBrand("yellow"); // or 'amber', 'orange' depending on your design system
+        setCurrentBrand("emerald");
+      } else {
+        setCurrentBrand("amber");
       }
     }
   }, []);
@@ -41,7 +43,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider
           theme={style.theme as Theme}
           brand={currentBrand as Schemes}
-          accent={style.accent as Schemes}
+          accent={currentBrand as Schemes}
           neutral={style.neutral as NeutralColor}
           solid={style.solid as SolidType}
           solidStyle={style.solidStyle as SolidStyle}

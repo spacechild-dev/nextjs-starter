@@ -234,10 +234,18 @@ export const Header = () => {
                   <Button href="/blog" variant="tertiary" size="s">
                     {t("nav.blog")}
                   </Button>
-                  <Button href="/projects" variant="tertiary" size="s">
+                  <Button 
+                    href={isDaiquiri ? "/projects" : "https://daiquiri.dev/projects"} 
+                    variant="tertiary" 
+                    size="s"
+                  >
                     {t("nav.projects")}
                   </Button>
-                  <Button href="/resume" variant="tertiary" size="s">
+                  <Button 
+                    href={!isDaiquiri ? "/resume" : "https://dagkanbayramoglu.com/resume"} 
+                    variant="tertiary" 
+                    size="s"
+                  >
                     {t("nav.career")}
                   </Button>
                 </Row>

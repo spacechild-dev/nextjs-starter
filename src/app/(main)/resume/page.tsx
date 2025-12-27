@@ -7,6 +7,21 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function ResumePage() {
   const { language, t } = useLanguage();
 
+  const calculateDuration = (start: Date, end: Date = new Date()) => {
+    const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+    return months < 1 ? 1 : months;
+  };
+
+  const optdomStart = new Date(2025, 9); // Oct 2025 (months are 0-indexed)
+  const roipublicStart = new Date(2024, 1); // Feb 2024
+  const roipublicEnd = new Date(2025, 9); // Oct 2025
+  const profajStart = new Date(2022, 1); // Feb 2022 (Başlangıç Şubat)
+  const profajEnd = new Date(2024, 1); // Feb 2024
+
+  const optdomDuration = calculateDuration(optdomStart);
+  const roipublicDuration = calculateDuration(roipublicStart, roipublicEnd);
+  const profajDuration = calculateDuration(profajStart, profajEnd);
+
   return (
     <Column
       fillWidth
@@ -64,7 +79,7 @@ export default function ResumePage() {
                 OPTDCOM
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                Oct 2025 – {t("career.present")}
+                {language === "tr" ? "Ekim 2025" : "Oct 2025"} – {t("career.present")} ({optdomDuration} {language === "tr" ? "ay" : "mos"})
               </Text>
             </Row>
             <Column
@@ -94,7 +109,7 @@ export default function ResumePage() {
                 ROIPUBLIC
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                Feb 2024 – Oct 2025
+                {language === "tr" ? "Şubat 2024 – Ekim 2025" : "Feb 2024 – Oct 2025"} ({roipublicDuration} {language === "tr" ? "ay" : "mos"})
               </Text>
             </Row>
             <Column
@@ -110,7 +125,7 @@ export default function ResumePage() {
                       : "Performance Marketing Team Lead"}
                   </Text>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
-                    Nov 2024 – Oct 2025
+                    {language === "tr" ? "Kasım 2024 – Ekim 2025" : "Nov 2024 – Oct 2025"}
                   </Text>
                 </Row>
                 <Text variant="body-default-s" onBackground="neutral-weak">
@@ -127,7 +142,7 @@ export default function ResumePage() {
                       : "Sr. Performance Marketing Executive"}
                   </Text>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
-                    Feb 2024 – Oct 2024
+                    {language === "tr" ? "Şubat 2024 – Ekim 2024" : "Feb 2024 – Oct 2024"}
                   </Text>
                 </Row>
                 <Text variant="body-default-s" onBackground="neutral-weak">
@@ -146,7 +161,7 @@ export default function ResumePage() {
                 PROFAJ
               </Heading>
               <Text variant="body-default-s" onBackground="neutral-weak">
-                Mart 2022 – Şubat 2024
+                {language === "tr" ? "Şubat 2022 – Şubat 2024" : "Feb 2022 – Feb 2024"} ({profajDuration} {language === "tr" ? "ay" : "mos"})
               </Text>
             </Row>
             <Column
@@ -162,13 +177,30 @@ export default function ResumePage() {
                       : "Digital Marketing Team Lead"}
                   </Text>
                   <Text variant="body-default-xs" onBackground="neutral-weak">
-                    Nis 2023 – Şub 2024
+                    {language === "tr" ? "Nisan 2023 – Şubat 2024" : "Apr 2023 – Feb 2024"}
                   </Text>
                 </Row>
                 <Text variant="body-default-s" onBackground="neutral-weak">
                   {language === "tr"
                     ? "Beş kişilik pazarlama ekibi için stratejik yönlendirme sağlama. Performans, büyüme ve operasyonel destek odaklı görüşmeleri yönetme."
                     : "Provided strategic direction for a five-person marketing team. Facilitated 1:1s focused on performance, growth, and operational support."}
+                </Text>
+              </Column>
+              <Column gap="4">
+                <Row horizontal="between" vertical="start">
+                  <Text variant="label-strong-m">
+                    {language === "tr"
+                      ? "Dijital Performans Uzmanı (İŞKUR Programı Dahil)"
+                      : "Digital Performance Specialist (Inc. ISKUR Program)"}
+                  </Text>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    {language === "tr" ? "Şubat 2022 – Mart 2023" : "Feb 2022 – Mar 2023"}
+                  </Text>
+                </Row>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  {language === "tr"
+                    ? "İŞKUR iş başı eğitim programı ile başlayan süreçte performans pazarlama temelleri ve kampanya yönetimi."
+                    : "Performance marketing fundamentals and campaign management, starting with the ISKUR on-the-job training program."}
                 </Text>
               </Column>
             </Column>

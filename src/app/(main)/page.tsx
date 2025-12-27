@@ -108,31 +108,31 @@ export default function Home() {
           <NowPlaying />
 
           <Flex gap="12" wrap horizontal="center">
-            <CTALink href={social.github} variant="secondary" size="s" weight="default">
+            <CTALink href={social.github} variant="secondary" size="s">
               <Flex gap="8" vertical="center">
                 <FaGithub /> GitHub
               </Flex>
             </CTALink>
 
-            <CTALink href={social.linkedin} variant="secondary" size="s" weight="default">
+            <CTALink href={social.linkedin} variant="secondary" size="s">
               <Flex gap="8" vertical="center">
                 <FaLinkedin /> LinkedIn
               </Flex>
             </CTALink>
 
-            <CTALink href={social.spotify} variant="secondary" size="s" weight="default">
+            <CTALink href={social.spotify} variant="secondary" size="s">
               <Flex gap="8" vertical="center">
                 <FaSpotify /> Spotify
               </Flex>
             </CTALink>
 
-            <CTALink href={social.lastfm} variant="secondary" size="s" weight="default">
+            <CTALink href={social.lastfm} variant="secondary" size="s">
               <Flex gap="8" vertical="center">
                 <FaLastfm /> Last.fm
               </Flex>
             </CTALink>
 
-            <CTALink href={social.discogs} variant="secondary" size="s" weight="default">
+            <CTALink href={social.discogs} variant="secondary" size="s">
               <Flex gap="8" vertical="center">
                 <SiDiscogs /> Discogs
               </Flex>
@@ -140,7 +140,6 @@ export default function Home() {
 
             <Button
               size="s"
-              weight="default"
               variant="primary"
               onClick={() => setIsContactOpen(true)}
             >

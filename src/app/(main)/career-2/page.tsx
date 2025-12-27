@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading, Text, Column, Flex, Row, Line, InlineCode } from "@once-ui-system/core";
+import { Heading, Text, Column, Flex, Row, Line, InlineCode, Button } from "@once-ui-system/core";
 import { useLanguage } from "@/context/LanguageContext";
 import { Timeline } from "@/components/Timeline";
 

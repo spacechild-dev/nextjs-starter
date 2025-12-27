@@ -21,11 +21,13 @@ import {
 import { style, dataStyle } from "../resources/once-ui.config";
 import { iconLibrary } from "../resources/icons";
 import { LanguageProvider } from "../context/LanguageContext";
+import { SessionProvider } from "next-auth/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <LayoutProvider>
-      <ThemeProvider
+    <SessionProvider>
+      <LayoutProvider>
+        <ThemeProvider
         theme={style.theme as Theme}
         brand={style.brand as Schemes}
         accent={style.accent as Schemes}

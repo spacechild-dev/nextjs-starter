@@ -1,6 +1,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
+import { useEffect, useState } from "react";
 import {
   BorderStyle,
   ChartMode,
@@ -24,12 +25,22 @@ import { iconLibrary } from "../resources/icons";
 import { LanguageProvider } from "../context/LanguageContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [currentBrand, setCurrentBrand] = useState(style.brand);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.hostname.includes("daiquiri")) {
+        setCurrentBrand("yellow"); // or 'amber', 'orange' depending on your design system
+      }
+    }
+  }, []);
+
   return (
     <SessionProvider>
       <LayoutProvider>
         <ThemeProvider
           theme={style.theme as Theme}
-          brand={style.brand as Schemes}
+          brand={currentBrand as Schemes}
           accent={style.accent as Schemes}
           neutral={style.neutral as NeutralColor}
           solid={style.solid as SolidType}

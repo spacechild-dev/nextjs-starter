@@ -162,7 +162,7 @@ export const Header = () => {
         <Flex
           paddingX="24"
           vertical="center"
-          hide="s"
+          hideDisplay="s"
           style={{
             backgroundColor: "var(--color-beta-bg)",
             height: "48px",
@@ -260,12 +260,12 @@ export const Header = () => {
               </Link>
 
               {/* Desktop Mega Menu */}
-              <Row hide="s">
+              <Row hideDisplay="s">
                 <MegaMenu menuGroups={menuGroups} />
               </Row>
 
               {/* Mobile Menu Toggle */}
-              <Row show="s">
+              <Row showDisplay="s">
                 <NavIcon
                   isActive={isMobileMenuOpen}
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

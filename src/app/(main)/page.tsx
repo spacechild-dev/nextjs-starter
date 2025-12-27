@@ -40,7 +40,7 @@ export default function Home() {
         horizontal="center"
         vertical="center"
         paddingX="l"
-        style={{ minHeight: "80vh" }}
+        style={{ minHeight: "95vh" }}
       >
         <Column maxWidth="m" horizontal="center" gap="48" align="center">
           <Column gap="32" horizontal="center">

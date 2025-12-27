@@ -25,7 +25,7 @@ export default function AdminDashboard() {
       <Background
         dots={{
           display: true,
-          opacity: 0.1,
+          opacity: 10,
           size: "2",
         }}
       />

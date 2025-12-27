@@ -20,7 +20,7 @@ interface ContactFormProps {
 
 export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
   const [loading, setLoading] = useState(false);
-  const { showToast } = useToast();
+  const { addToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -90,7 +90,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
           }),
         );
 
-        showToast({
+        addToast({
           title: "Message sent!",
           description: "I'll get back to you as soon as possible.",
           variant: "success",
@@ -102,7 +102,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
         throw new Error("Failed to send message");
       }
     } catch (error) {
-      showToast({
+      addToast({
         title: "Error",
         description: "Something went wrong. Please try again later.",
         variant: "danger",

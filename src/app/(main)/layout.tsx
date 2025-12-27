@@ -16,7 +16,7 @@ import {
 } from "@once-ui-system/core";
 import { Providers } from "@/components/Providers";
 import { Header } from "@/components/Header";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { DynamicAnalytics } from "@/components/DynamicAnalytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export async function generateMetadata() {
@@ -58,7 +58,7 @@ export default function RootLayout({
         path={meta.home.path}
       />
       <head>
-        <GoogleAnalytics />
+        <DynamicAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

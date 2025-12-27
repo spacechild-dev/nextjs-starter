@@ -20,6 +20,7 @@ import {
   HiOutlineLanguage,
   HiOutlineClock,
   HiOutlineCalendarDays,
+  HiOutlineCog6Tooth,
 } from "react-icons/hi2";
 
 export const iconLibrary: Record<string, IconType> = {
@@ -43,6 +44,7 @@ export const iconLibrary: Record<string, IconType> = {
   language: HiOutlineLanguage,
   clock: HiOutlineClock,
   calendar: HiOutlineCalendarDays,
+  settings: HiOutlineCog6Tooth,
 };
 
 export type IconLibrary = typeof iconLibrary;

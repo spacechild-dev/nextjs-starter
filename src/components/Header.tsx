@@ -14,11 +14,12 @@ import {
 } from "@once-ui-system/core";
 import { social } from "@/resources/once-ui.config";
 import { Code } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import * as analytics from "@/lib/analytics";
 import { useNowPlaying } from "@/hooks/useNowPlaying";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -28,11 +29,17 @@ export const Header = () => {
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const { track } = useNowPlaying();
   const [isDaiquiri, setIsDaiquiri] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsDaiquiri(window.location.hostname.includes("daiquiri"));
-    }
+    const handleClickOutside = (event: MouseEvent) => {
+      if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
+        setIsSettingsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -176,38 +183,34 @@ export const Header = () => {
 
               <div className="hide-mobile">
                 <Row vertical="center" gap="8">
-                  <Flex background="neutral-alpha-weak" radius="full" padding="2" vertical="center">
-                    <ToggleButton
-                      id="lang-en"
-                      size="s"
-                      selected={language === "en"}
-                      onClick={() => {
-                        setLanguage("en");
-                        analytics.trackLanguageChange("en");
-                      }}
-                    >
-                      EN
-                    </ToggleButton>
-                    <ToggleButton
-                      id="lang-tr"
-                      size="s"
-                      selected={language === "tr"}
-                      onClick={() => {
-                        setLanguage("tr");
-                        analytics.trackLanguageChange("tr");
-                      }}
-                    >
-                      TR
-                    </ToggleButton>
-                    <Line vert background="neutral-alpha-medium" height="12" marginX="4" />
+                  <div style={{ position: 'relative' }} ref={settingsRef}>
                     <IconButton
-                      id="theme-toggle"
+                      id="settings-toggle"
                       size="s"
                       variant="tertiary"
-                      icon={theme === "dark" ? "sun" : "moon"}
-                      onClick={toggleTheme}
+                      icon="settings"
+                      onClick={() => setIsSettingsOpen(!isSettingsOpen)}
                     />
-                  </Flex>
+                    <AnimatePresence>
+                      {isSettingsOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            position: 'absolute',
+                            top: 'calc(100% + 12px)',
+                            right: 0,
+                            zIndex: 10,
+                            pointerEvents: 'auto'
+                          }}
+                        >
+                          <ThemeSwitcher />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </Row>
               </div>
             </Row>

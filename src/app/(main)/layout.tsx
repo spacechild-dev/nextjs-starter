@@ -96,6 +96,15 @@ export default function RootLayout({
                     scaling: style.scaling,
                     "viz-style": dataStyle.variant,
                   })};
+                  
+                  if (window.location.hostname.includes('daiquiri')) {
+                    config.brand = 'amber';
+                    config.accent = 'amber';
+                  } else {
+                    config.brand = 'emerald';
+                    config.accent = 'emerald';
+                  }
+
                   Object.entries(config).forEach(([key, value]) => {
                     root.setAttribute('data-' + key, value);
                   });

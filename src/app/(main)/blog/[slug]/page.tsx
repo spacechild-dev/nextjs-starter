@@ -19,6 +19,10 @@ export async function generateStaticParams() {
   }));
 }
 
+interface BlogPostProps {
+  params: Promise<{ slug: string }>;
+}
+
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
   const lang: "en" | "tr" = "en"; // Type-safe language definition

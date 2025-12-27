@@ -91,8 +91,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
         );
 
         addToast({
-          title: "Message sent!",
-          description: "I'll get back to you as soon as possible.",
+          message: "Message sent! I'll get back to you as soon as possible.",
           variant: "success",
         });
 
@@ -103,8 +102,7 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
       }
     } catch (error) {
       addToast({
-        title: "Error",
-        description: "Something went wrong. Please try again later.",
+        message: "Something went wrong. Please try again later.",
         variant: "danger",
       });
     } finally {

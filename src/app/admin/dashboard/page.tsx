@@ -95,8 +95,14 @@ export default function AdminDashboard() {
           <Text variant="body-default-m" onBackground="neutral-weak">
             Arama performansı, anahtar kelime takibi ve site trafiğini izle.
           </Text>
-          <Button variant="secondary" size="m" suffixIcon="chevronRight" fillWidth>
-            SEO Araçları
+          <Button 
+            variant="secondary" 
+            size="m" 
+            suffixIcon="chevronRight" 
+            fillWidth
+            onClick={() => router.push("/admin/tracking")}
+          >
+            Takip Araçlarını Yönet
           </Button>
         </Flex>
 

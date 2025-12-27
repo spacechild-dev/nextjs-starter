@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 export interface Track {
   name: string;
   artist: { "#text": string };
+  album: { "#text": string };
   image: { "#text": string }[];
   "@attr"?: { nowplaying: string };
 }

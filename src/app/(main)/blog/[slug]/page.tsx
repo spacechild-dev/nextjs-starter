@@ -10,8 +10,6 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import * as analytics from "@/lib/analytics";
 import { getAllBlogPosts } from "@/lib/blog";
 
-export const dynamic = "force-static";
-
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
   return posts.map((post) => ({
@@ -25,16 +23,16 @@ interface BlogPostProps {
 
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
-  const lang = "en" as string; // Use type assertion to allow comparison
+  const lang = "en" as string;
 
-  // Try to load language specific file first
+  // Try to load language specific file first from root content directory
   let filePath = path.join(process.cwd(), "content/blog", `${slug}-${lang}.mdx`);
 
   if (!fs.existsSync(filePath)) {
     // Fallback to default slug if exists, or en
-    filePath = path.join(process.cwd(), "src/content/blog", `${slug}.mdx`);
+    filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(process.cwd(), "src/content/blog", `${slug}-en.mdx`);
+      filePath = path.join(process.cwd(), "content/blog", `${slug}-en.mdx`);
     }
   }
 

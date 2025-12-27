@@ -97,13 +97,13 @@ export default function Home() {
               </Flex>
             </CTALink>
 
-            <CTALink href="https://www.discogs.com/user/dagkan" variant="secondary" size="m">
+            <CTALink href={social.discogs} variant="secondary" size="m">
               <Flex gap="8" vertical="center">
                 <SiDiscogs /> Discogs
               </Flex>
             </CTALink>
 
-            <Button variant="primary" size="m" onClick={() => setIsContactOpen(true)}>
+            <Button variant="secondary" size="m" onClick={() => setIsContactOpen(true)}>
               <Flex gap="8" vertical="center">
                 <FaEnvelope /> Get in Touch
               </Flex>
@@ -115,8 +115,21 @@ export default function Home() {
       </Column>
 
       {/* Blog Section */}
-      <Column fillWidth horizontal="center" paddingY="128" paddingX="l" background="surface">
-        <Column maxWidth="s" fillWidth gap="32">
+      <Column
+        fillWidth
+        horizontal="center"
+        paddingY="80"
+        paddingX="l"
+        background="surface"
+        style={{
+          position: "relative",
+          backgroundImage:
+            "radial-gradient(var(--neutral-alpha-weak) 1px, transparent 1px), radial-gradient(var(--neutral-alpha-weak) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          backgroundPosition: "0 0, 20px 20px",
+        }}
+      >
+        <Column maxWidth="m" fillWidth gap="32">
           <Row fillWidth horizontal="start" vertical="center">
             <Heading
               variant="display-strong-xs"

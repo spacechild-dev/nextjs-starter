@@ -53,85 +53,45 @@ export const Header = () => {
     {
       id: "blog",
       label: t("nav.blog"),
-      sections: [
-        {
-          title: t("nav.topics"),
-          links: [
-            {
-              label: t("nav.allPosts"),
-              href: "/blog",
-              icon: "document",
-              description: "Read everything",
-            },
-            {
-              label: t("nav.digitalMarketing"),
-              href: "/blog?tag=marketing",
-              icon: "target",
-              description: "Performance & Strategy",
-            },
-            {
-              label: t("nav.tracking"),
-              href: "/blog?tag=tracking",
-              icon: "chart",
-              description: "Analytics & Data",
-            },
-          ],
-        },
-      ],
+      href: "/blog",
     },
     {
       id: "projects",
       label: t("nav.projects"),
-      sections: [
-        {
-          title: "Explore",
-          links: [
-            {
-              label: "All Projects",
-              href: "/projects",
-              icon: "layers",
-              description: "View all case studies",
-            },
-            {
-              label: "Web Apps",
-              href: "/projects?type=web",
-              icon: "globe",
-              description: "Next.js & React apps",
-            },
-            {
-              label: "Docker Apps",
-              href: "/projects?type=docker",
-              icon: "cube",
-              description: "Self-hosted solutions",
-            },
-            {
-              label: "Chrome Apps",
-              href: "/projects?type=chrome",
-              icon: "puzzle",
-              description: "Browser extensions",
-            },
-          ],
-        },
-      ],
+      href: "/projects",
     },
     {
       id: "career",
       label: t("nav.career"),
+      href: "/resume",
+    },
+  ];
+
+  // Mobile specific settings group
+  const mobileMenuGroups = [
+    ...menuGroups,
+    {
+      id: "settings",
+      label: language === "tr" ? "Ayarlar" : "Settings",
       sections: [
         {
-          title: "Professional",
+          title: language === "tr" ? "Dil ve Tema" : "Language & Theme",
           links: [
             {
-              label: t("nav.experience"),
-              href: "/resume#experience",
-              icon: "briefcase",
-              description: "Work history",
+              label: language === "tr" ? "English" : "Türkçe",
+              href: "#",
+              icon: "globe",
+              onClick: () => {
+                const newLang = language === "en" ? "tr" : "en";
+                setLanguage(newLang);
+                analytics.trackLanguageChange(newLang);
+              },
             },
             {
-              label: t("nav.certificates"),
-              href: "/resume#certificates",
-              icon: "book",
-              description: "Skills & Badges",
+              label: theme === "dark" ? (language === "tr" ? "Aydınlık Mod" : "Light Mode") : (language === "tr" ? "Karanlık Mod" : "Dark Mode"),
+              href: "#",
+              icon: theme === "dark" ? "sun" : "moon",
+              onClick: toggleTheme,
             },
           ],
         },
@@ -202,7 +162,6 @@ export const Header = () => {
         >
           <Row vertical="center" fillWidth horizontal="between" gap="12">
             <Row vertical="center" gap="12">
-              {/* Dynamic Home Icon */}
               <Link
                 href="/"
                 style={{ textDecoration: "none" }}
@@ -259,10 +218,18 @@ export const Header = () => {
                 </motion.div>
               </Link>
 
-              {/* Desktop Mega Menu */}
+              {/* Desktop Menu - Simple Links (MegaMenu is TODO) */}
               <div className="hide-mobile">
-                <Row>
-                  <MegaMenu menuGroups={menuGroups} />
+                <Row gap="8" vertical="center">
+                  <Button href="/blog" variant="tertiary" size="s">
+                    {t("nav.blog")}
+                  </Button>
+                  <Button href="/projects" variant="tertiary" size="s">
+                    {t("nav.projects")}
+                  </Button>
+                  <Button href="/resume" variant="tertiary" size="s">
+                    {t("nav.career")}
+                  </Button>
                 </Row>
               </div>
 
@@ -322,7 +289,7 @@ export const Header = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <MobileMegaMenu
-            menuGroups={[{ id: "home", label: t("nav.home"), href: "/" }, ...menuGroups]}
+            menuGroups={[{ id: "home", label: t("nav.home"), href: "/" }, ...mobileMenuGroups]}
             onClose={() => setIsMobileMenuOpen(false)}
           />
         )}

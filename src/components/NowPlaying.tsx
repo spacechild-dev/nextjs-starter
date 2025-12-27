@@ -67,8 +67,8 @@ export const NowPlaying = () => {
           {/* Album Cover */}
           <Flex
             style={{
-              width: "64px",
-              height: "64px",
+              width: "80px",
+              height: "80px",
               position: "relative",
               overflow: "hidden",
               borderRadius: "12px",
@@ -84,14 +84,14 @@ export const NowPlaying = () => {
           </Flex>
 
           {/* Track Info */}
-          <Flex direction="column" gap="2" style={{ minWidth: 0, flex: 1, overflow: "hidden" }}>
+          <Flex direction="column" gap="4" style={{ minWidth: 0, flex: 1, overflow: "hidden" }}>
             <Text
               variant="code-default-xs"
-              onBackground="brand-strong"
               style={{
+                color: "#d51007",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                opacity: 0.7,
+                fontWeight: "bold",
                 marginBottom: "2px",
               }}
             >

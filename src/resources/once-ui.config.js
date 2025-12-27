@@ -127,8 +127,9 @@ const social = {
   linkedin: "https://www.linkedin.com/in/dagkanbayramoglu/",
   discord: "", // Not specified
   github: "https://github.com/spacechild-dev",
-  spotify: "https://open.spotify.com/user/az7ds62ok9xtg09ua7cs7ym9i",
+  spotify: "https://open.spotify.com/user/az7ds62ok9xtg09ua7cs7ym9i?si=1f1758d9baac47c2&nd=1&dlsi=ecb1f2679928494c",
   lastfm: "https://www.last.fm/user/dagkan/listening-report/year",
+  discogs: "https://www.discogs.com/user/dagkanbayramoglu/collection",
   buyMeACoffee: "https://buymeacoffee.com/daiquiri",
 };
 

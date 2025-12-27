@@ -26,15 +26,15 @@ import { LanguageProvider } from "../context/LanguageContext";
 
 export function Providers({ children, domain }: { children: React.ReactNode; domain?: string }) {
   const [currentBrand, setCurrentBrand] = useState<Schemes>(
-    domain?.includes("daiquiri") ? "yellow" : (style.brand as Schemes)
+    domain?.includes("daiquiri") ? ("lime" as Schemes) : (style.brand as Schemes)
   );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (window.location.hostname.includes("daiquiri")) {
-        setCurrentBrand("lime");
+        setCurrentBrand("lime" as Schemes);
       } else {
-        setCurrentBrand("emerald");
+        setCurrentBrand("emerald" as Schemes);
       }
     }
   }, []);

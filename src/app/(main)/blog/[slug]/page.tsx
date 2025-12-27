@@ -10,11 +10,7 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import * as analytics from "@/lib/analytics";
 import { getAllBlogPosts } from "@/lib/blog";
 
-export const runtime = "edge";
-
-interface BlogPostProps {
-  params: Promise<{ slug: string }>;
-}
+export const dynamic = "force-static";
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
@@ -25,7 +21,7 @@ export async function generateStaticParams() {
 
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
-  const lang = "en"; // Default to en for static generation
+  const lang: "en" | "tr" = "en"; // Type-safe language definition
 
   // Try to load language specific file first
   let filePath = path.join(process.cwd(), "content/blog", `${slug}-${lang}.mdx`);

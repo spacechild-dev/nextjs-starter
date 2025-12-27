@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getProject, getAllProjects } from "@/lib/projects";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
-export const runtime = "edge";
+export const dynamic = "force-static";
 
 export async function generateStaticParams() {
   const projects = getAllProjects();

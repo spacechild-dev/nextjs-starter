@@ -7,15 +7,9 @@ import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
-import * as analytics from "@/lib/analytics";
-import { getAllBlogPosts } from "@/lib/blog";
+import { headers } from "next/headers";
 
-export async function generateStaticParams() {
-  const posts = getAllBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 interface BlogPostProps {
   params: Promise<{ slug: string }>;
@@ -23,7 +17,10 @@ interface BlogPostProps {
 
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
-  const lang = "en" as string;
+  
+  const headersList = await headers();
+  const host = headersList.get("host") || "";
+  const lang = host.includes(".tr") ? "tr" : "en";
 
   // Try to load language specific file first from root content directory
   let filePath = path.join(process.cwd(), "content/blog", `${slug}-${lang}.mdx`);

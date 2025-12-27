@@ -369,69 +369,76 @@ export const Header = () => {
                 whiteSpace: "nowrap",
               }}
             >
-              <Flex vertical="center" gap="12">
-                <Flex
-                  radius="xs"
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    overflow: "hidden",
-                    border: "1px solid var(--neutral-alpha-weak)",
-                  }}
-                >
-                  <img
-                    src={
-                      track.image.find((img) => img.size === "small")?.["#text"] ||
-                      track.image[0]["#text"]
-                    }
-                    alt="Album Art"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </Flex>
-
-                <div
-                  style={{
-                    height: "20px",
-                    overflow: "hidden",
-                    position: "relative",
-                    minWidth: "120px",
-                  }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={infoIndex}
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -20, opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Text
-                        variant="label-strong-s"
-                        style={{ color: "var(--neutral-on-background-strong)" }}
-                      >
-                        {trackInfo[infoIndex]?.label}
-                      </Text>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                <Flex
-                  paddingX="8"
-                  paddingY="2"
-                  radius="xs"
-                  style={{
-                    background: "rgba(213, 16, 7, 0.1)",
-                    border: "1px solid rgba(213, 16, 7, 0.2)",
-                  }}
-                >
-                  <Text
-                    variant="code-default-xs"
-                    style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}
+              <a
+                href="https://www.last.fm/user/dagkan"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
+              >
+                <Flex vertical="center" gap="12">
+                  <Flex
+                    radius="xs"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      overflow: "hidden",
+                      border: "1px solid var(--neutral-alpha-weak)",
+                    }}
                   >
-                    NOW PLAYING
-                  </Text>
+                    <img
+                      src={
+                        track.image.find((img) => img.size === "small")?.["#text"] ||
+                        track.image[0]["#text"]
+                      }
+                      alt="Album Art"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </Flex>
+
+                  <div
+                    style={{
+                      height: "20px",
+                      overflow: "hidden",
+                      position: "relative",
+                      minWidth: "120px",
+                    }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={infoIndex}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Text
+                          variant="label-strong-s"
+                          style={{ color: "var(--neutral-on-background-strong)" }}
+                        >
+                          {trackInfo[infoIndex]?.label}
+                        </Text>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  <Flex
+                    paddingX="8"
+                    paddingY="2"
+                    radius="xs"
+                    style={{
+                      background: "rgba(213, 16, 7, 0.1)",
+                      border: "1px solid rgba(213, 16, 7, 0.2)",
+                    }}
+                  >
+                    <Text
+                      variant="code-default-xs"
+                      style={{ color: "#d51007", fontWeight: "bold", fontSize: "10px" }}
+                    >
+                      NOW PLAYING
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
